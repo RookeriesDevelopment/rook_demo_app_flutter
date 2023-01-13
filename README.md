@@ -2,7 +2,7 @@
 
 Demo app of rook_extraction packages:
 
-* [rook_health_connect](https://www.google.com)
+* [rook_health_connect](https://pub.dev/packages/rook_health_connect)
 
 ## Getting Started
 
