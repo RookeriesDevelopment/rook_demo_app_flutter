@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rook_extraction_demo/ui/widgets/predefined.dart';
+import 'package:rook_extraction_demo/ui/widgets/scrollable_scaffold.dart';
+import 'package:rook_extraction_demo/ui/widgets/section_title.dart';
 import 'package:rook_health_connect/rook_health_connect.dart';
 
 const String healthConnectPlaygroundScreenRoute = '/health-connect/playground';
@@ -26,87 +29,82 @@ class _HealthConnectPlaygroundScreenState
     extends State<HealthConnectPlaygroundScreen> {
   DateTime oldestDate = DateTime.now().subtract(const Duration(days: 29));
   DateTime soonestDate = DateTime.now().subtract(const Duration(days: 1));
+
   DateTime sleepSummaryDate = DateTime.now().subtract(const Duration(days: 1));
+  bool sleepFetching = false;
   SleepSummary? sleepSummary;
-  String? sleepSummaryError;
+  String? sleepError;
 
   @override
   void initState() {
-    getSleepSummaryLastDate();
+    getLastDate();
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Health connect playground')),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              title('Sleep summary'),
-              ElevatedButton(
-                onPressed: () => showDatePicker(
-                  context: context,
-                  initialDate: sleepSummaryDate,
-                  firstDate: oldestDate,
-                  lastDate: soonestDate,
-                ).then((selected) => getSleepSummary(selected)),
-                child: const Text('Select a date'),
-              ),
-              const SizedBox(height: 10),
-              if (sleepSummary != null) Text('Sleep summary: $sleepSummary'),
-              if (sleepSummaryError != null) Text('Error: $sleepSummaryError'),
-              const SizedBox(height: 10),
-              divider,
-            ],
+    return ScrollableScaffold(
+      name: 'Health connect playground',
+      alignment: Alignment.topCenter,
+      child: Column(
+        children: [
+          const SectionTitle('Sleep'),
+          ElevatedButton(
+            onPressed: sleepFetching ? null : showSleepSelector,
+            child: const Text('Select a date'),
           ),
-        ),
+          const SizedBox(height: 10),
+          if (sleepSummary != null) Text('Sleep summary: $sleepSummary'),
+          if (sleepError != null) Text('Error: $sleepError'),
+          sectionDivider,
+        ],
       ),
     );
   }
 
-  Widget title(String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Text(
-        title,
-        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-      ),
-    );
+  void getLastDate() async {
+    try {
+      final sleepSummaryLastDate = await widget.args.manager.getSleepSummaryLastDate();
+
+      setState(() => sleepSummaryDate = sleepSummaryLastDate);
+    } catch (ignored) {
+      // Ignored
+    }
   }
 
-  Widget get divider {
-    return const Divider(thickness: 1, height: 40, color: Colors.black54);
+  void showSleepSelector() {
+    showDatePicker(
+      context: context,
+      initialDate: sleepSummaryDate,
+      firstDate: oldestDate,
+      lastDate: soonestDate,
+    ).then((selected) => getSleep(selected));
   }
 
-  void getSleepSummary(DateTime? selectedDate) async {
+  void getSleep(DateTime? selectedDate) async {
     if (selectedDate != null) {
+      setState(() {
+        sleepFetching = true;
+        sleepSummary = null;
+        sleepError = null;
+      });
+
       try {
         final summary = await widget.args.manager.getSleepSummary(selectedDate);
 
         setState(() {
+          sleepFetching = false;
           sleepSummary = summary;
-          sleepSummaryError = null;
+          sleepError = null;
         });
       } catch (error) {
         setState(() {
+          sleepFetching = false;
           sleepSummary = null;
-          sleepSummaryError = '$error';
+          sleepError = '$error';
         });
       }
-    }
-  }
-
-  void getSleepSummaryLastDate() async {
-    try {
-      final date = await widget.args.manager.getSleepSummaryLastDate();
-
-      setState(() => sleepSummaryDate = date);
-    } catch (ignored) {
-      // Ignored
     }
   }
 }

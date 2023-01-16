@@ -9,23 +9,20 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Extraction sample')),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const RookAuthStatus(),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => navigate(context, healthConnectAvailabilityScreenRoute),
-                child: const Text('Health Connect'),
-              ),
-            ],
+    return ScrollableScaffold(
+      name: 'Extraction / Transmission sample',
+      alignment: Alignment.topCenter,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const RookAuthStatus(),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () =>
+                navigate(context, healthConnectAvailabilityScreenRoute),
+            child: const Text('Health Connect'),
           ),
-        ),
+        ],
       ),
     );
   }

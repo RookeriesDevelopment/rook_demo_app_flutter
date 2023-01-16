@@ -25,48 +25,39 @@ class _HealthConnectAvailabilityScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Health connect availability')),
-      body: Container(
-        padding: const EdgeInsets.all(10),
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
-          child: FocusDetector(
-            onFocusGained: updateAvailability,
-            child: availabilityError != null
-                ? ErrorMessageWithRetry(
-                    error: '$availabilityError',
-                    retry: updateAvailability,
+    return ScrollableScaffold(
+      name: 'Health connect availability',
+      child: FocusDetector(
+        onFocusGained: updateAvailability,
+        child: availabilityError != null
+            ? ErrorMessageWithRetry(
+                error: '$availabilityError',
+                retry: updateAvailability,
+              )
+            : availabilityStatus != null
+                ? Column(
+                    children: [
+                      Text('Health Connect: ${availabilityStatus?.name}'),
+                      const SizedBox(height: 20),
+                      if (availabilityStatus == AvailabilityStatus.notSupported)
+                        ElevatedButton(
+                          onPressed: Navigator.of(context).pop,
+                          child: const Text('Go back'),
+                        ),
+                      if (availabilityStatus == AvailabilityStatus.notInstalled)
+                        ElevatedButton(
+                          onPressed: openPlayStore,
+                          child: const Text('Install now'),
+                        ),
+                      if (availabilityStatus == AvailabilityStatus.installed)
+                        ElevatedButton.icon(
+                          onPressed: () => goToPermissions(context),
+                          icon: const Icon(Icons.arrow_forward_rounded),
+                          label: const Text('Continue'),
+                        ),
+                    ],
                   )
-                : availabilityStatus != null
-                    ? Column(
-                        children: [
-                          Text('Health Connect: ${availabilityStatus?.name}'),
-                          const SizedBox(height: 20),
-                          if (availabilityStatus ==
-                              AvailabilityStatus.notSupported)
-                            ElevatedButton(
-                              onPressed: Navigator.of(context).pop,
-                              child: const Text('Go back'),
-                            ),
-                          if (availabilityStatus ==
-                              AvailabilityStatus.notInstalled)
-                            ElevatedButton(
-                              onPressed: openPlayStore,
-                              child: const Text('Install now'),
-                            ),
-                          if (availabilityStatus ==
-                              AvailabilityStatus.installed)
-                            ElevatedButton.icon(
-                              onPressed: () => goToPermissions(context),
-                              icon: const Icon(Icons.arrow_forward_rounded),
-                              label: const Text('Continue'),
-                            ),
-                        ],
-                      )
-                    : const CircularProgressIndicator(),
-          ),
-        ),
+                : const CircularProgressIndicator(),
       ),
     );
   }

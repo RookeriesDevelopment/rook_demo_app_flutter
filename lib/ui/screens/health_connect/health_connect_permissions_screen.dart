@@ -33,49 +33,43 @@ class _HealthConnectPermissionsScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Health connect permissions')),
-      body: Container(
-        padding: const EdgeInsets.all(10),
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
-          child: FocusDetector(
-            onFocusGained: updatePermissions,
-            child: permissionsError != null
-                ? ErrorMessageWithRetry(
-                    error: '$permissionsError',
-                    retry: updatePermissions,
+    return ScrollableScaffold(
+      name: 'Health connect permissions',
+      child: FocusDetector(
+        onFocusGained: updatePermissions,
+        child: permissionsError != null
+            ? ErrorMessageWithRetry(
+                error: '$permissionsError',
+                retry: updatePermissions,
+              )
+            : permissionsGranted != null
+                ? Column(
+                    children: [
+                      Text('Permissions granted: $permissionsGranted'),
+                      const SizedBox(height: 20),
+                      if (!permissionsGranted!)
+                        const Text(
+                          "'If the 'Request permissions' button does not work try to open health connect, locate 'rook extraction demo' app and grant and permissions'",
+                        ),
+                      if (!permissionsGranted!)
+                        ElevatedButton(
+                          onPressed: requestPermissions,
+                          child: const Text('Request permissions'),
+                        ),
+                      if (!permissionsGranted!)
+                        ElevatedButton(
+                          onPressed: openSettings,
+                          child: const Text('Open Health Connect'),
+                        ),
+                      if (permissionsGranted!)
+                        ElevatedButton.icon(
+                          onPressed: () => goToPlayGround(context),
+                          icon: const Icon(Icons.arrow_forward_rounded),
+                          label: const Text('Continue'),
+                        ),
+                    ],
                   )
-                : permissionsGranted != null
-                    ? Column(
-                        children: [
-                          Text('Permissions granted: $permissionsGranted'),
-                          const SizedBox(height: 20),
-                          if (!permissionsGranted!)
-                            const Text(
-                              "'If the 'Request permissions' button does not work try to open health connect, locate 'rook extraction demo' app and grant and permissions'",
-                            ),
-                          if (!permissionsGranted!)
-                            ElevatedButton(
-                              onPressed: requestPermissions,
-                              child: const Text('Request permissions'),
-                            ),
-                          if (!permissionsGranted!)
-                            ElevatedButton(
-                              onPressed: openSettings,
-                              child: const Text('Open Health Connect'),
-                            ),
-                          if (permissionsGranted!)
-                            ElevatedButton.icon(
-                              onPressed: () => goToPlayGround(context),
-                              icon: const Icon(Icons.arrow_forward_rounded),
-                              label: const Text('Continue'),
-                            ),
-                        ],
-                      )
-                    : const CircularProgressIndicator(),
-          ),
-        ),
+                : const CircularProgressIndicator(),
       ),
     );
   }
