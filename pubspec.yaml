@@ -13,6 +13,7 @@ dependencies:
   logging: ">=1.0.0 <2.0.0"
   rook_auth: "^0.1.1"
   rook_health_connect: "^0.0.1"
+  rook_transmission: "^0.0.1"
   focus_detector: ^2.0.1
   url_launcher: ^6.1.7
   receive_intent: ^0.2.3
