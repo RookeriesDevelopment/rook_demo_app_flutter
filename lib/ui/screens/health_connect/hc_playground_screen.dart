@@ -50,6 +50,10 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
   bool? synced;
   String? syncError;
 
+  bool clearing = false;
+  bool? cleared;
+  String? clearError;
+
   @override
   void initState() {
     getLastDate();
@@ -82,6 +86,14 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
           ),
           if (synced == true) const Text('All synced!'),
           if (synced == false) Text('Error: $syncError'),
+          sectionDivider,
+          const SectionTitle('Clear'),
+          ElevatedButton(
+            onPressed: clearing ? null : clearAllQueues,
+            child: const Text('Clear all queues'),
+          ),
+          if (cleared == true) const Text('All cleared!'),
+          if (cleared == false) Text('Error: $clearError'),
         ],
       ),
     );
@@ -200,6 +212,30 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
           sleepSEnqueueError = '$error';
         });
       }
+    }
+  }
+
+  void clearAllQueues() async {
+    setState(() {
+      clearing = true;
+      cleared = null;
+      clearError = null;
+    });
+
+    try {
+      await manager.clearQueuedSleepSummaries();
+
+      setState(() {
+        clearing = false;
+        cleared = true;
+        clearError = null;
+      });
+    } catch (error) {
+      setState(() {
+        clearing = false;
+        cleared = false;
+        clearError = '$error';
+      });
     }
   }
 
