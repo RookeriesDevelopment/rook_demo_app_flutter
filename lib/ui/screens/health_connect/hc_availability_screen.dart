@@ -5,21 +5,18 @@ import 'package:rook_extraction_demo/ui/widgets/widgets.dart';
 import 'package:rook_health_connect/rook_health_connect.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const String healthConnectAvailabilityScreenRoute =
-    '/health-connect/availability';
+const String hcAvailabilityScreenRoute = '/health-connect/availability';
 
-class HealthConnectAvailabilityScreen extends StatefulWidget {
+class HCAvailabilityScreen extends StatefulWidget {
   final RookHealthConnectManager manager = RookHealthConnectManager();
 
-  HealthConnectAvailabilityScreen({Key? key}) : super(key: key);
+  HCAvailabilityScreen({Key? key}) : super(key: key);
 
   @override
-  State<HealthConnectAvailabilityScreen> createState() =>
-      _HealthConnectAvailabilityScreenState();
+  State<HCAvailabilityScreen> createState() => _HCAvailabilityScreenState();
 }
 
-class _HealthConnectAvailabilityScreenState
-    extends State<HealthConnectAvailabilityScreen> {
+class _HCAvailabilityScreenState extends State<HCAvailabilityScreen> {
   AvailabilityStatus? availabilityStatus;
   String? availabilityError;
 
@@ -90,8 +87,8 @@ class _HealthConnectAvailabilityScreenState
 
   void goToPermissions(BuildContext context) {
     Navigator.of(context).pushReplacementNamed(
-      healthConnectPermissionsScreenRoute,
-      arguments: HealthConnectPermissionsScreenArgs(manager: widget.manager),
+      hcPermissionsScreenRoute,
+      arguments: HCPermissionsScreenArgs(manager: widget.manager),
     );
   }
 }

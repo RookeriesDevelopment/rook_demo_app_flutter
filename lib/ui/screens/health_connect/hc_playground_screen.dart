@@ -6,30 +6,27 @@ import 'package:rook_extraction_demo/ui/widgets/section_title.dart';
 import 'package:rook_health_connect/rook_health_connect.dart';
 import 'package:rook_transmission/rook_transmission.dart';
 
-const String healthConnectPlaygroundScreenRoute = '/health-connect/playground';
+const String hcPlaygroundScreenRoute = '/health-connect/playground';
 
-class HealthConnectPlaygroundScreenArgs {
+class HCPlaygroundScreenArgs {
   final RookHealthConnectManager manager;
 
-  const HealthConnectPlaygroundScreenArgs({required this.manager});
+  const HCPlaygroundScreenArgs({required this.manager});
 }
 
-class HealthConnectPlaygroundScreen extends StatefulWidget {
-  final HealthConnectPlaygroundScreenArgs args;
+class HCPlaygroundScreen extends StatefulWidget {
+  final HCPlaygroundScreenArgs args;
 
-  const HealthConnectPlaygroundScreen({
+  const HCPlaygroundScreen({
     Key? key,
     required this.args,
   }) : super(key: key);
 
   @override
-  State<HealthConnectPlaygroundScreen> createState() =>
-      _HealthConnectPlaygroundScreenState();
+  State<HCPlaygroundScreen> createState() => _HCPlaygroundScreenState();
 }
 
-class _HealthConnectPlaygroundScreenState
-    extends State<HealthConnectPlaygroundScreen> {
-
+class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
   final RookTransmissionManager manager = RookTransmissionManager(
     TransmissionSecrets.url,
     'daniel.nolasco@rookmotion.com',

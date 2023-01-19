@@ -8,20 +8,20 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) => const HomeScreen(),
         );
-      case healthConnectAvailabilityScreenRoute:
+      case hcAvailabilityScreenRoute:
         return MaterialPageRoute(
-          builder: (context) => HealthConnectAvailabilityScreen(),
+          builder: (context) => HCAvailabilityScreen(),
         );
-      case healthConnectPermissionsScreenRoute:
+      case hcPermissionsScreenRoute:
         return MaterialPageRoute(
-          builder: (context) => HealthConnectPermissionsScreen(
-            args: settings.arguments as HealthConnectPermissionsScreenArgs,
+          builder: (context) => HCPermissionsScreen(
+            args: settings.arguments as HCPermissionsScreenArgs,
           ),
         );
-      case healthConnectPlaygroundScreenRoute:
+      case hcPlaygroundScreenRoute:
         return MaterialPageRoute(
-          builder: (context) => HealthConnectPlaygroundScreen(
-            args: settings.arguments as HealthConnectPlaygroundScreenArgs,
+          builder: (context) => HCPlaygroundScreen(
+            args: settings.arguments as HCPlaygroundScreenArgs,
           ),
         );
       default:

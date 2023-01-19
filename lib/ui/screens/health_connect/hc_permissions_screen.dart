@@ -4,30 +4,27 @@ import 'package:rook_extraction_demo/ui/screens/screens.dart';
 import 'package:rook_extraction_demo/ui/widgets/widgets.dart';
 import 'package:rook_health_connect/rook_health_connect.dart';
 
-const String healthConnectPermissionsScreenRoute =
-    '/health-connect/permissions';
+const String hcPermissionsScreenRoute = '/health-connect/permissions';
 
-class HealthConnectPermissionsScreenArgs {
+class HCPermissionsScreenArgs {
   final RookHealthConnectManager manager;
 
-  const HealthConnectPermissionsScreenArgs({required this.manager});
+  const HCPermissionsScreenArgs({required this.manager});
 }
 
-class HealthConnectPermissionsScreen extends StatefulWidget {
-  final HealthConnectPermissionsScreenArgs args;
+class HCPermissionsScreen extends StatefulWidget {
+  final HCPermissionsScreenArgs args;
 
-  const HealthConnectPermissionsScreen({
+  const HCPermissionsScreen({
     Key? key,
     required this.args,
   }) : super(key: key);
 
   @override
-  State<HealthConnectPermissionsScreen> createState() =>
-      _HealthConnectPermissionsScreenState();
+  State<HCPermissionsScreen> createState() => _HCPermissionsScreenState();
 }
 
-class _HealthConnectPermissionsScreenState
-    extends State<HealthConnectPermissionsScreen> {
+class _HCPermissionsScreenState extends State<HCPermissionsScreen> {
   bool? permissionsGranted;
   String? permissionsError;
 
@@ -108,8 +105,8 @@ class _HealthConnectPermissionsScreenState
 
   void goToPlayGround(BuildContext context) {
     Navigator.of(context).pushReplacementNamed(
-      healthConnectPlaygroundScreenRoute,
-      arguments: HealthConnectPlaygroundScreenArgs(
+      hcPlaygroundScreenRoute,
+      arguments: HCPlaygroundScreenArgs(
         manager: widget.args.manager,
       ),
     );

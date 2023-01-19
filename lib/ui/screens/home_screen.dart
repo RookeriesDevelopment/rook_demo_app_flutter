@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () =>
-                navigate(context, healthConnectAvailabilityScreenRoute),
+                navigate(context, hcAvailabilityScreenRoute),
             child: const Text('Health Connect'),
           ),
         ],
