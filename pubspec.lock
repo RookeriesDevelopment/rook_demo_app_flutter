@@ -253,11 +253,18 @@ packages:
       name: rook_health_connect
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.1"
+    version: "0.0.3"
   rook_transmission:
     dependency: "direct main"
     description:
       name: rook_transmission
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
+  rook_users:
+    dependency: "direct main"
+    description:
+      name: rook_users
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.1"

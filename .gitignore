@@ -47,3 +47,4 @@ app.*.map.json
 /android/app/release
 /lib/secrets.dart
 /lib/transmission_secrets.dart
+/lib/users_secrets.dart

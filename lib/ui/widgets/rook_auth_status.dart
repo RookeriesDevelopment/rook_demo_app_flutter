@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rook_auth/rook_auth.dart';
 import 'package:rook_extraction_demo/secrets.dart';
+import 'package:rook_extraction_demo/ui/widgets/rook_user_status.dart';
 
 class RookAuthStatus extends StatefulWidget {
   const RookAuthStatus({Key? key}) : super(key: key);
@@ -47,6 +48,8 @@ class _RookAuthStatusState extends State<RookAuthStatus> {
                       ),
                     ],
                   ),
+                if (authorized) const SizedBox(height: 10),
+                if (authorized) const RookUserStatus(),
                 if (!authorized) Text('Error: $error'),
                 if (!authorized) const SizedBox(height: 20),
                 if (!authorized)
