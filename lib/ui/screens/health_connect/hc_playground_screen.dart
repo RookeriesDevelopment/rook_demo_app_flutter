@@ -429,11 +429,27 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
             activityEndDatetime: event.activityEndDatetime,
             activityDurationSeconds: event.activityDurationSeconds,
             activityTypeName: event.activityTypeName,
+            caloriesExpenditureKilocalories:
+                event.caloriesExpenditureKilocalories,
+            caloriesNetActiveKilocalories: event.caloriesNetActiveKilocalories,
             steps: event.steps,
+            traveledDistanceMeters: event.traveledDistanceMeters,
+            floorsClimbed: event.floorsClimbed,
+            elevationAvgAltitudeMeters: event.elevationAvgAltitudeMeters,
+            elevationMinimumAltitudeMeters:
+                event.elevationMinimumAltitudeMeters,
+            elevationMaxAltitudeMeters: event.elevationMaxAltitudeMeters,
+            hrMaxBpm: event.hrMaxBpm,
+            hrMinimumBpm: event.hrMinimumBpm,
+            hrAvgBpm: event.hrAvgBpm,
+            hrAvgRestingBpm: event.hrAvgRestingBpm,
+            hrvAvgRmssd: event.hrvAvgRmssd,
             speedAvgMetersPerSecond: event.speedAvgMetersPerSecond,
             speedMaxMetersPerSecond: event.speedMaxMetersPerSecond,
             cadenceAvgRpm: event.cadenceAvgRpm,
             cadenceMaxRpm: event.cadenceMaxRpm,
+            saturationAvgPercentage: event.saturationAvgPercentage,
+            vo2MaxAvgMlPerMinPerKg: event.vo2MaxAvgMlPerMinPerKg,
           );
 
           await manager.enqueuePhysicalEvent(item);
