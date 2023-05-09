@@ -5,6 +5,7 @@ import 'package:logging/logging.dart';
 import 'package:rook_apple_health/rook_apple_health.dart';
 import 'package:rook_demo_flutter/secrets.dart';
 import 'package:rook_demo_flutter/ui/screens/screens.dart';
+import 'package:rook_demo_flutter/ui/widgets/widgets.dart';
 
 const String homeScreenRoute = '/home';
 
@@ -23,6 +24,8 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const RookAuthStatus(),
+              const SizedBox(height: 20),
               if (defaultTargetPlatform == TargetPlatform.iOS)
                 CupertinoButton.filled(
                   child: const Text('Apple Health'),

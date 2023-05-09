@@ -14,7 +14,7 @@ dependencies:
   rook_users: 0.1.1
   rook_health_connect: 0.2.1
   rook_apple_health: 0.1.0
-  rook_transmission: 0.3.2
+  rook_transmission: 0.3.3
   logging: ">=1.0.0 <2.0.0"
   receive_intent: ^0.2.3
   focus_detector: ">=2.0.0 <3.0.0"

@@ -16,11 +16,11 @@ Demo app for rook connect data packages:
 
 ```dart
 class Secrets {
-  static const String rookAuthUrl = 'rookAuthUrl';
-  static const String userID = 'userID';
-  static const String clientUUID = 'clientUUID';
-  static const String clientPassword = 'clientPassword';
-  static const String rookUrl = 'rookUrl';
+  static String rookAuthUrl = 'rookAuthUrl';
+  static String userID = 'userID';
+  static String clientUUID = 'clientUUID';
+  static String clientPassword = 'clientPassword';
+  static String rookUrl = 'rookUrl';
 }
 ```
 

@@ -51,5 +51,11 @@
     <string>This app requires access to your health and fitness data in order to track your workouts and activity levels.</string>
     <key>NSHealthUpdateUsageDescription</key>
     <string>This app requires permission to write workout data to HealthKit.</string>
+    <key>NSBonjourServices</key>
+    <array>
+        <string>_dartobservatory._tcp</string>
+    </array>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>Flutter</string>
 </dict>
 </plist>
