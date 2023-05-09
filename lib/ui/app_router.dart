@@ -10,7 +10,7 @@ class AppRouter {
         );
       case homeScreenRoute:
         return MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
+          builder: (context) => HomeScreen(),
         );
       case hcAvailabilityScreenRoute:
         return MaterialPageRoute(

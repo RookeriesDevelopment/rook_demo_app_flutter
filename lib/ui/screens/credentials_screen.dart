@@ -21,38 +21,41 @@ class _CredentialsScreenState extends State<CredentialsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Credentials'),
-        leading: IconButton(
-          onPressed: Navigator.of(context).pop,
-          icon: const Icon(Icons.arrow_back_rounded),
-        ),
-      ),
+      appBar: AppBar(title: const Text('Credentials')),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const Text('Set your credentials'),
-            const SizedBox(height: 10),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    validator: (newValue) => emptyValidator(newValue),
-                    onSaved: (newValue) => userID = "$newValue",
-                    initialValue: userID,
-                  ),
-                  TextFormField(
-                    validator: (newValue) => emptyValidator(newValue),
-                    onSaved: (newValue) => clientUUID = "$newValue",
-                    initialValue: clientUUID,
-                  ),
-                  TextFormField(
-                    validator: (newValue) => emptyValidator(newValue),
-                    onSaved: (newValue) => clientPassword = "$newValue",
-                    initialValue: clientPassword,
-                  ),
-                ],
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      validator: (newValue) => emptyValidator(newValue),
+                      onSaved: (newValue) => userID = "$newValue",
+                      initialValue: userID,
+                      decoration:
+                          const InputDecoration(border: OutlineInputBorder()),
+                    ),
+                    const SizedBox(height: 10),
+                    TextFormField(
+                      validator: (newValue) => emptyValidator(newValue),
+                      onSaved: (newValue) => clientUUID = "$newValue",
+                      initialValue: clientUUID,
+                      decoration:
+                          const InputDecoration(border: OutlineInputBorder()),
+                    ),
+                    const SizedBox(height: 10),
+                    TextFormField(
+                      validator: (newValue) => emptyValidator(newValue),
+                      onSaved: (newValue) => clientPassword = "$newValue",
+                      initialValue: clientPassword,
+                      decoration:
+                          const InputDecoration(border: OutlineInputBorder()),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 10),
