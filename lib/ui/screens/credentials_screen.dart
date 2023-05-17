@@ -86,6 +86,8 @@ class _CredentialsScreenState extends State<CredentialsScreen> {
       Secrets.userID = userID;
       Secrets.clientUUID = clientUUID;
       Secrets.clientPassword = clientPassword;
+
+      navigateToHome();
     }
   }
 
