@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   rook_auth: 0.1.1
-  rook_users: 0.1.1
+  rook_users: 0.1.2
   rook_health_connect: 0.2.1
   rook_apple_health: 0.1.0
   rook_transmission: 0.3.3

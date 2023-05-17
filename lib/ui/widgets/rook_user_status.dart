@@ -18,6 +18,7 @@ class _RookUserStatusState extends State<RookUserStatus> {
 
   bool loading = false;
   RookUser? hcUser;
+  RookUser? ahUser;
   String? error;
 
   @override
@@ -32,7 +33,7 @@ class _RookUserStatusState extends State<RookUserStatus> {
     return Column(
       children: [
         if (loading) const LinearProgressIndicator(),
-        if (!loading && hcUser != null)
+        if (!loading && hcUser != null && ahUser != null)
           Card(
             child: Padding(
               padding: const EdgeInsets.all(10),
@@ -40,18 +41,8 @@ class _RookUserStatusState extends State<RookUserStatus> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Center(child: Text('Users')),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      const Icon(Icons.verified_rounded),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          'Health Connect: ${hcUser?.id} is registered!',
-                        ),
-                      ),
-                    ],
-                  ),
+                  ...userData(hcUser!),
+                  ...userData(ahUser!),
                 ],
               ),
             ),
@@ -67,19 +58,43 @@ class _RookUserStatusState extends State<RookUserStatus> {
     );
   }
 
+  List<Widget> userData(RookUser rookUser) {
+    return [
+      const SizedBox(height: 10),
+      Row(
+        children: [
+          const Icon(Icons.verified_rounded),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              '${rookUser.type.sourceOfData}: ${rookUser.id} is registered!',
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(height: 10),
+    ];
+  }
+
   void initialize() async {
     setState(() => loading = true);
     try {
       await Future.delayed(const Duration(seconds: 1));
 
-      final user = await manager.registerRookUser(
+      final hc = await manager.registerRookUser(
         Secrets.userID,
         UserType.healthConnect,
       );
 
+      final ah = await manager.registerRookUser(
+        Secrets.userID,
+        UserType.appleHealth,
+      );
+
       setState(() {
         loading = false;
-        hcUser = user;
+        hcUser = hc;
+        ahUser = ah;
         error = null;
       });
     } catch (e) {
