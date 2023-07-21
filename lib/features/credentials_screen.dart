@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rook_demo_flutter/features/home_screen.dart';
 import 'package:rook_demo_flutter/secrets.dart';
-import 'package:rook_demo_flutter/ui/screens/screens.dart';
 
 const String credentialsScreenRoute = '/credentials';
 
@@ -15,13 +15,11 @@ class _CredentialsScreenState extends State<CredentialsScreen> {
   final _formKey = GlobalKey<FormState>();
 
   String userID = Secrets.userID;
-  String clientUUID = Secrets.clientUUID;
-  String clientPassword = Secrets.clientPassword;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Credentials')),
+      appBar: AppBar(title: const Text('Set up user ID')),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -38,22 +36,6 @@ class _CredentialsScreenState extends State<CredentialsScreen> {
                       decoration:
                           const InputDecoration(border: OutlineInputBorder()),
                     ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      validator: (newValue) => emptyValidator(newValue),
-                      onSaved: (newValue) => clientUUID = "$newValue",
-                      initialValue: clientUUID,
-                      decoration:
-                          const InputDecoration(border: OutlineInputBorder()),
-                    ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      validator: (newValue) => emptyValidator(newValue),
-                      onSaved: (newValue) => clientPassword = "$newValue",
-                      initialValue: clientPassword,
-                      decoration:
-                          const InputDecoration(border: OutlineInputBorder()),
-                    ),
                   ],
                 ),
               ),
@@ -61,12 +43,7 @@ class _CredentialsScreenState extends State<CredentialsScreen> {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: setCredentials,
-              child: const Text('Save credentials'),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: navigateToHome,
-              child: const Text('Use default credentials'),
+              child: const Text('Save'),
             ),
           ],
         ),
@@ -84,14 +61,8 @@ class _CredentialsScreenState extends State<CredentialsScreen> {
   void setCredentials() {
     if (_formKey.currentState?.validate() == true) {
       Secrets.userID = userID;
-      Secrets.clientUUID = clientUUID;
-      Secrets.clientPassword = clientPassword;
 
-      navigateToHome();
+      Navigator.of(context).pushReplacementNamed(homeScreenRoute);
     }
-  }
-
-  void navigateToHome() {
-    Navigator.of(context).pushReplacementNamed(homeScreenRoute);
   }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
-import 'package:rook_demo_flutter/ui/screens/screens.dart';
-import 'package:rook_demo_flutter/ui/widgets/widgets.dart';
+import 'package:rook_demo_flutter/common/widget/error_message_with_retry.dart';
+import 'package:rook_demo_flutter/common/widget/scrollable_scaffold.dart';
+import 'package:rook_demo_flutter/features/health_connect/hc_playground_screen.dart';
 import 'package:rook_health_connect/rook_health_connect.dart';
 
 const String hcPermissionsScreenRoute = '/health-connect/permissions';

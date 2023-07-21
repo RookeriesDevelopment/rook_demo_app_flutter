@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:rook_demo_flutter/ui/screens/screens.dart';
+import 'package:rook_demo_flutter/features/apple_health/ah_availability_screen.dart';
+import 'package:rook_demo_flutter/features/apple_health/ah_permissions_screen.dart';
+import 'package:rook_demo_flutter/features/apple_health/ah_playground_screen.dart';
+import 'package:rook_demo_flutter/features/credentials_screen.dart';
+import 'package:rook_demo_flutter/features/health_connect/hc_availability_screen.dart';
+import 'package:rook_demo_flutter/features/health_connect/hc_permissions_screen.dart';
+import 'package:rook_demo_flutter/features/health_connect/hc_playground_screen.dart';
+import 'package:rook_demo_flutter/features/home_screen.dart';
 
 class AppRouter {
   Route<Object?>? onGenerateRoute(RouteSettings settings) {

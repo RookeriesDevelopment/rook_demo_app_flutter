@@ -3,9 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:rook_apple_health/rook_apple_health.dart';
+import 'package:rook_demo_flutter/features/apple_health/ah_availability_screen.dart';
+import 'package:rook_demo_flutter/features/auth/widget/rook_auth_status.dart';
+import 'package:rook_demo_flutter/features/health_connect/hc_availability_screen.dart';
 import 'package:rook_demo_flutter/secrets.dart';
-import 'package:rook_demo_flutter/ui/screens/screens.dart';
-import 'package:rook_demo_flutter/ui/widgets/widgets.dart';
 
 const String homeScreenRoute = '/home';
 

@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  equatable:
+    dependency: "direct main"
+    description:
+      name: equatable
+      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
   fake_async:
     dependency: transitive
     description:
@@ -116,10 +124,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
+      sha256: "759d1a329847dd0f39226c688d3e06a6b8679668e350e2891a6474f8b4bb8525"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.6"
+    version: "1.1.0"
   http_parser:
     dependency: transitive
     description:
@@ -300,42 +308,42 @@ packages:
     dependency: "direct main"
     description:
       name: rook_apple_health
-      sha256: b1dfe107c778c9b8c40fabd7b46a53d36d307e493075ef4c719ba4a3b5be1c94
+      sha256: d93d17790ac6e24a43319dfccdaa295c00ca1173ec144f938bdf308b7379f32c
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.1"
+    version: "0.2.0"
   rook_auth:
     dependency: "direct main"
     description:
       name: rook_auth
-      sha256: "6b84f6b6ee7743d1842cb3eb31342b9b701e35645634bac0e05edb0df9c1e020"
+      sha256: d9099b8c6083c3c65c121199c3642cf64f245d4ed703664beabf32aa803779ba
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.1"
+    version: "0.2.0"
   rook_health_connect:
     dependency: "direct main"
     description:
       name: rook_health_connect
-      sha256: "4aecae9a838ca3005d1543b8ad7816faf326286ecffafa4ba2b6b691ba812876"
+      sha256: f38d4d908238d8cc81ee93160c7632051247bfdc72e855b42c68e46f624f0d71
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.1"
+    version: "0.3.0"
   rook_transmission:
     dependency: "direct main"
     description:
       name: rook_transmission
-      sha256: "4f545d6aaef363738d86b79063c48c7c46b857e3760ec651ffb3e29630686692"
+      sha256: "798ac01a83896b76f11c829e8b4f70701252c9fe7754ccf87ce8082adbbd9f0d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.3"
+    version: "0.4.0"
   rook_users:
     dependency: "direct main"
     description:
       name: rook_users
-      sha256: d3b775ded5bade0f0dda6fe5f6d48191e193842350a226accbc14373b7867005
+      sha256: "23c4ee4e7c8baf879948fe6f054239ece609a16e430c6132f0b7f80237aad4d2"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.2"
+    version: "0.2.0"
   shared_preferences:
     dependency: transitive
     description:
@@ -550,5 +558,5 @@ packages:
     source: hosted
     version: "1.0.0"
 sdks:
-  dart: ">=3.0.0-0 <4.0.0"
+  dart: ">=3.0.0 <4.0.0"
   flutter: ">=3.3.0"

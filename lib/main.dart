@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:receive_intent/receive_intent.dart';
-import 'package:rook_demo_flutter/ui/app_router.dart';
-import 'package:rook_demo_flutter/ui/screens/screens.dart';
+import 'package:rook_demo_flutter/app_router.dart';
+import 'package:rook_demo_flutter/features/credentials_screen.dart';
+import 'package:rook_demo_flutter/features/health_connect/hc_privacy_policy_screen.dart';
 
 import 'color_schemes.g.dart';
 
@@ -19,11 +21,12 @@ void main() {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  runAppFromIntent();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) => runAppFromIntent());
 }
 
 void runAppFromIntent() async {
-  Widget app = RookExtractionDemoApp();
+  Widget app = RookApp();
 
   try {
     final receivedIntent = await ReceiveIntent.getInitialIntent();
@@ -38,10 +41,10 @@ void runAppFromIntent() async {
   }
 }
 
-class RookExtractionDemoApp extends StatelessWidget {
+class RookApp extends StatelessWidget {
   final AppRouter _router = AppRouter();
 
-  RookExtractionDemoApp({Key? key}) : super(key: key);
+  RookApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +65,8 @@ class HCPrivacyPolicyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Privacy policy',
-      theme: ThemeData(primarySwatch: Colors.red),
+      theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+      darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       home: const HCPrivacyPolicyScreen(),
     );
   }

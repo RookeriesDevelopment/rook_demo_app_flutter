@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rook_demo_flutter/common/extension/map_extensions.dart';
+import 'package:rook_demo_flutter/features/auth/widget/rook_user_status.dart';
 import 'package:rook_demo_flutter/secrets.dart';
-import 'package:rook_demo_flutter/ui/widgets/rook_user_status.dart';
-import 'package:rook_demo_flutter/domain/extension/map_extensions.dart';
 import 'package:rook_auth/rook_auth.dart';
 
 class RookAuthStatus extends StatefulWidget {

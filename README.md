@@ -4,6 +4,7 @@ Demo app for rook connect data packages:
 
 * Extraction
     * [rook_health_connect](https://pub.dev/packages/rook_health_connect)
+    * [rook_apple_health](https://pub.dev/packages/rook_apple_health)
 * Transmission
     * [rook_transmission](https://pub.dev/packages/rook_transmission)
 * Users

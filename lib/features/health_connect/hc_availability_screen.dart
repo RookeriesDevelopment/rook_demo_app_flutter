@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
-import 'package:rook_demo_flutter/ui/screens/screens.dart';
-import 'package:rook_demo_flutter/ui/widgets/widgets.dart';
+import 'package:rook_demo_flutter/common/widget/error_message_with_retry.dart';
+import 'package:rook_demo_flutter/common/widget/scrollable_scaffold.dart';
+import 'package:rook_demo_flutter/features/health_connect/hc_permissions_screen.dart';
 import 'package:rook_health_connect/rook_health_connect.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,7 +18,7 @@ class HCAvailabilityScreen extends StatefulWidget {
 }
 
 class _HCAvailabilityScreenState extends State<HCAvailabilityScreen> {
-  AvailabilityStatus? availabilityStatus;
+  HCAvailabilityStatus? availabilityStatus;
   String? availabilityError;
 
   @override
@@ -36,17 +37,17 @@ class _HCAvailabilityScreenState extends State<HCAvailabilityScreen> {
                     children: [
                       Text('Health Connect: ${availabilityStatus?.name}'),
                       const SizedBox(height: 20),
-                      if (availabilityStatus == AvailabilityStatus.notSupported)
+                      if (availabilityStatus == HCAvailabilityStatus.notSupported)
                         ElevatedButton(
                           onPressed: Navigator.of(context).pop,
                           child: const Text('Go back'),
                         ),
-                      if (availabilityStatus == AvailabilityStatus.notInstalled)
+                      if (availabilityStatus == HCAvailabilityStatus.notInstalled)
                         ElevatedButton(
                           onPressed: openPlayStore,
                           child: const Text('Install now'),
                         ),
-                      if (availabilityStatus == AvailabilityStatus.installed)
+                      if (availabilityStatus == HCAvailabilityStatus.installed)
                         ElevatedButton.icon(
                           onPressed: () => goToPermissions(context),
                           icon: const Icon(Icons.arrow_forward_rounded),
@@ -61,7 +62,7 @@ class _HCAvailabilityScreenState extends State<HCAvailabilityScreen> {
 
   void updateAvailability() async {
     try {
-      final status = await widget.manager.checkAvailability();
+      final status = await RookHealthConnectAvailability.checkAvailability();
 
       setState(() {
         availabilityStatus = status;
@@ -77,7 +78,7 @@ class _HCAvailabilityScreenState extends State<HCAvailabilityScreen> {
 
   void openPlayStore() async {
     try {
-      final success = await launchUrl(Uri.parse(
+      await launchUrl(Uri.parse(
         'https://play.google.com/store/apps/details?id=com.google.android.apps.healthdata',
       ));
     } catch (ignored) {

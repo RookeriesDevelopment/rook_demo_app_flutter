@@ -9,8 +9,8 @@ class HCPrivacyPolicyScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Privacy policy')),
       body: Container(
         padding: const EdgeInsets.all(10),
-        child: Column(
-          children: const [
+        child: const Column(
+          children: [
             Text('This is a placeholder example.'),
             SizedBox(height: 10),
             Text(

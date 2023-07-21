@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
-import 'package:rook_demo_flutter/ui/screens/screens.dart';
-import 'package:rook_demo_flutter/ui/widgets/widgets.dart';
 import 'package:rook_apple_health/rook_apple_health.dart';
+import 'package:rook_demo_flutter/common/widget/error_message_with_retry.dart';
+import 'package:rook_demo_flutter/common/widget/scrollable_scaffold.dart';
+import 'package:rook_demo_flutter/features/apple_health/ah_permissions_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const String ahAvailabilityScreenRoute = '/apple-health/availability';
@@ -78,9 +79,7 @@ class _AHAvailabilityScreenState extends State<AHAvailabilityScreen> {
 
   void openAppStore() async {
     try {
-      final success = await launchUrl(Uri.parse(
-        'https://apps.apple.com/app/apple-health/id1242545199',
-      ));
+      await launchUrl(Uri.parse('https://apps.apple.com/app/apple-health/id1242545199'));
     } catch (ignored) {
       // Ignored
     }

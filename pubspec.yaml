@@ -1,21 +1,22 @@
 name: rook_demo_flutter
-description: Demo app of rook_extraction and rook_transmision packages
+description: Demo app of rook_extraction and rook_transmission packages
 publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.18.0 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  rook_auth: 0.1.1
-  rook_users: 0.1.2
-  rook_health_connect: 0.2.1
-  rook_apple_health: 0.1.1
-  rook_transmission: 0.3.3
+  rook_auth: 0.2.0
+  rook_users: 0.2.0
+  rook_health_connect: 0.3.0
+  rook_apple_health: 0.2.0
+  rook_transmission: 0.4.0
   logging: ">=1.0.0 <2.0.0"
+  equatable: ">=2.0.0 <3.0.0"
   receive_intent: ^0.2.3
   focus_detector: ">=2.0.0 <3.0.0"
   url_launcher: ">=6.0.0 <7.0.0"
