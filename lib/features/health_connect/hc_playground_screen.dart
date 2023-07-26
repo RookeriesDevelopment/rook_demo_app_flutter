@@ -33,7 +33,7 @@ class HCPlaygroundScreen extends StatefulWidget {
 
 class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
   DateTime oldestDate = DateTime.now().subtract(twentyNineDays);
-  DateTime soonestDate = DateTime.now().subtract(oneDay);
+  DateTime soonestDate = DateTime.now();
 
   DateTime sleepSummaryDate = DateTime.now().subtract(oneDay);
   bool sleepSummaryExtracting = false;
@@ -73,7 +73,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
 
   DateTime bloodGlucoseEventDate = DateTime.now().subtract(oneDay);
   bool bloodGlucoseEventExtracting = false;
-  HCBloodGlucoseEvent? bloodGlucoseEventExtracted;
+  List<HCBloodGlucoseEvent>? bloodGlucoseEventExtracted;
   String? bloodGlucoseEventExtractError;
 
   bool bloodGlucoseEventEnqueueing = false;
@@ -82,7 +82,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
 
   DateTime bloodPressureEventDate = DateTime.now().subtract(oneDay);
   bool bloodPressureEventExtracting = false;
-  HCBloodPressureEvent? bloodPressureEventExtracted;
+  List<HCBloodPressureEvent>? bloodPressureEventExtracted;
   String? bloodPressureEventExtractError;
 
   bool bloodPressureEventEnqueueing = false;
@@ -91,7 +91,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
 
   DateTime bodyMetricsEventDate = DateTime.now().subtract(oneDay);
   bool bodyMetricsEventExtracting = false;
-  HCBodyMetricsEvent? bodyMetricsEventExtracted;
+  List<HCBodyMetricsEvent>? bodyMetricsEventExtracted;
   String? bodyMetricsEventExtractError;
 
   bool bodyMetricsEventEnqueueing = false;
@@ -100,7 +100,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
 
   DateTime heartRateBodyEventDate = DateTime.now().subtract(oneDay);
   bool heartRateBodyEventExtracting = false;
-  HCHeartRateEvent? heartRateBodyEventExtracted;
+  List<HCHeartRateEvent>? heartRateBodyEventExtracted;
   String? heartRateBodyEventExtractError;
 
   bool heartRateBodyEventEnqueueing = false;
@@ -118,7 +118,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
 
   DateTime hydrationEventDate = DateTime.now().subtract(oneDay);
   bool hydrationEventExtracting = false;
-  HCHydrationEvent? hydrationEventExtracted;
+  List<HCHydrationEvent>? hydrationEventExtracted;
   String? hydrationEventExtractError;
 
   bool hydrationEventEnqueueing = false;
@@ -127,7 +127,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
 
   DateTime moodEventDate = DateTime.now().subtract(oneDay);
   bool moodEventExtracting = false;
-  HCMoodEvent? moodEventExtracted;
+  List<HCMoodEvent>? moodEventExtracted;
   String? moodEventExtractError;
 
   bool moodEventEnqueueing = false;
@@ -136,7 +136,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
 
   DateTime nutritionEventDate = DateTime.now().subtract(oneDay);
   bool nutritionEventExtracting = false;
-  HCNutritionEvent? nutritionEventExtracted;
+  List<HCNutritionEvent>? nutritionEventExtracted;
   String? nutritionEventExtractError;
 
   bool nutritionEventEnqueueing = false;
@@ -145,7 +145,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
 
   DateTime oxygenationBodyEventDate = DateTime.now().subtract(oneDay);
   bool oxygenationBodyEventExtracting = false;
-  HCOxygenationEvent? oxygenationBodyEventExtracted;
+  List<HCOxygenationEvent>? oxygenationBodyEventExtracted;
   String? oxygenationBodyEventExtractError;
 
   bool oxygenationBodyEventEnqueueing = false;
@@ -172,7 +172,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
 
   DateTime temperatureEventDate = DateTime.now().subtract(oneDay);
   bool temperatureEventExtracting = false;
-  HCTemperatureEvent? temperatureEventExtracted;
+  List<HCTemperatureEvent>? temperatureEventExtracted;
   String? temperatureEventExtractError;
 
   bool temperatureEventEnqueueing = false;
@@ -245,7 +245,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
             enqueued: bodySummaryEnqueued,
             enqueueError: bodySummaryEnqueueError,
           ),
-          ...healthDataType<HCBloodGlucoseEvent>(
+          ...healthDataType<List<HCBloodGlucoseEvent>>(
             name: 'Blood Glucose Event',
             extract: bloodGlucoseEventSelector,
             extracting: bloodGlucoseEventExtracting,
@@ -256,7 +256,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
             enqueued: bloodGlucoseEventEnqueued,
             enqueueError: bloodGlucoseEventEnqueueError,
           ),
-          ...healthDataType<HCBloodPressureEvent>(
+          ...healthDataType<List<HCBloodPressureEvent>>(
             name: 'Blood Pressure Event',
             extract: bloodPressureEventSelector,
             extracting: bloodPressureEventExtracting,
@@ -267,7 +267,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
             enqueued: bloodPressureEventEnqueued,
             enqueueError: bloodPressureEventEnqueueError,
           ),
-          ...healthDataType<HCBodyMetricsEvent>(
+          ...healthDataType<List<HCBodyMetricsEvent>>(
             name: 'Body Metrics Event',
             extract: bodyMetricsEventSelector,
             extracting: bodyMetricsEventExtracting,
@@ -278,7 +278,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
             enqueued: bodyMetricsEventEnqueued,
             enqueueError: bodyMetricsEventEnqueueError,
           ),
-          ...healthDataType<HCHeartRateEvent>(
+          ...healthDataType<List<HCHeartRateEvent>>(
             name: 'Heart Rate Body Event',
             extract: heartRateBodyEventSelector,
             extracting: heartRateBodyEventExtracting,
@@ -300,7 +300,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
             enqueued: heartRatePhysicalEventEnqueued,
             enqueueError: heartRatePhysicalEventEnqueueError,
           ),
-          ...healthDataType<HCHydrationEvent>(
+          ...healthDataType<List<HCHydrationEvent>>(
             name: 'Hydration Event',
             extract: hydrationEventSelector,
             extracting: hydrationEventExtracting,
@@ -311,7 +311,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
             enqueued: hydrationEventEnqueued,
             enqueueError: hydrationEventEnqueueError,
           ),
-          ...healthDataType<HCMoodEvent>(
+          ...healthDataType<List<HCMoodEvent>>(
             name: 'Mood Event',
             extract: moodEventSelector,
             extracting: moodEventExtracting,
@@ -322,7 +322,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
             enqueued: moodEventEnqueued,
             enqueueError: moodEventEnqueueError,
           ),
-          ...healthDataType<HCNutritionEvent>(
+          ...healthDataType<List<HCNutritionEvent>>(
             name: 'Nutrition Event',
             extract: nutritionEventSelector,
             extracting: nutritionEventExtracting,
@@ -333,7 +333,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
             enqueued: nutritionEventEnqueued,
             enqueueError: nutritionEventEnqueueError,
           ),
-          ...healthDataType<HCOxygenationEvent>(
+          ...healthDataType<List<HCOxygenationEvent>>(
             name: 'Oxygenation Body Event',
             extract: oxygenationBodyEventSelector,
             extracting: oxygenationBodyEventExtracting,
@@ -366,7 +366,7 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
             enqueued: stressEventEnqueued,
             enqueueError: stressEventEnqueueError,
           ),
-          ...healthDataType<HCTemperatureEvent>(
+          ...healthDataType<List<HCTemperatureEvent>>(
             name: 'Temperature Event',
             extract: temperatureEventSelector,
             extracting: temperatureEventExtracting,
@@ -824,9 +824,11 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
       });
 
       try {
-        final item = bloodGlucoseEventExtracted?.toItem();
+        for (final event in bloodGlucoseEventExtracted!) {
+          final item = event.toItem();
 
-        await widget.transmission.enqueueBloodGlucoseEvent(item!);
+          await widget.transmission.enqueueBloodGlucoseEvent(item);
+        }
 
         setState(() {
           bloodGlucoseEventExtracted = null;
@@ -891,9 +893,11 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
       });
 
       try {
-        final item = bloodPressureEventExtracted?.toItem();
+        for (final event in bloodPressureEventExtracted!) {
+          final item = event.toItem();
 
-        await widget.transmission.enqueueBloodPressureEvent(item!);
+          await widget.transmission.enqueueBloodPressureEvent(item);
+        }
 
         setState(() {
           bloodPressureEventExtracted = null;
@@ -958,9 +962,11 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
       });
 
       try {
-        final item = bodyMetricsEventExtracted?.toItem();
+        for (final event in bodyMetricsEventExtracted!) {
+          final item = event.toItem();
 
-        await widget.transmission.enqueueBodyMetricsEvent(item!);
+          await widget.transmission.enqueueBodyMetricsEvent(item);
+        }
 
         setState(() {
           bodyMetricsEventExtracted = null;
@@ -1025,9 +1031,11 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
       });
 
       try {
-        final item = heartRateBodyEventExtracted?.toItem();
+        for (final event in heartRateBodyEventExtracted!) {
+          final item = event.toItem();
 
-        await widget.transmission.enqueueHeartRateEvent(item!);
+          await widget.transmission.enqueueHeartRateEvent(item);
+        }
 
         setState(() {
           heartRateBodyEventExtracted = null;
@@ -1161,9 +1169,11 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
       });
 
       try {
-        final item = hydrationEventExtracted?.toItem();
+        for (final event in hydrationEventExtracted!) {
+          final item = event.toItem();
 
-        await widget.transmission.enqueueHydrationEvent(item!);
+          await widget.transmission.enqueueHydrationEvent(item);
+        }
 
         setState(() {
           hydrationEventExtracted = null;
@@ -1228,9 +1238,11 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
       });
 
       try {
-        final item = moodEventExtracted?.toItem();
+        for (final event in moodEventExtracted!) {
+          final item = event.toItem();
 
-        await widget.transmission.enqueueMoodEvent(item!);
+          await widget.transmission.enqueueMoodEvent(item);
+        }
 
         setState(() {
           moodEventExtracted = null;
@@ -1295,9 +1307,11 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
       });
 
       try {
-        final item = nutritionEventExtracted?.toItem();
+        for (final event in nutritionEventExtracted!) {
+          final item = event.toItem();
 
-        await widget.transmission.enqueueNutritionEvent(item!);
+          await widget.transmission.enqueueNutritionEvent(item);
+        }
 
         setState(() {
           nutritionEventExtracted = null;
@@ -1362,9 +1376,11 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
       });
 
       try {
-        final item = oxygenationBodyEventExtracted?.toItem();
+        for (final event in oxygenationBodyEventExtracted!) {
+          final item = event.toItem();
 
-        await widget.transmission.enqueueOxygenationEvent(item!);
+          await widget.transmission.enqueueOxygenationEvent(item);
+        }
 
         setState(() {
           oxygenationBodyEventExtracted = null;
@@ -1567,9 +1583,11 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
       });
 
       try {
-        final item = temperatureEventExtracted?.toItem();
+        for (final event in temperatureEventExtracted!) {
+          final item = event.toItem();
 
-        await widget.transmission.enqueueTemperatureEvent(item!);
+          await widget.transmission.enqueueTemperatureEvent(item);
+        }
 
         setState(() {
           temperatureEventExtracted = null;

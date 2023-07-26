@@ -12,8 +12,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   rook_auth: 0.2.0
   rook_users: 0.2.0
-  rook_health_connect: 0.3.0
-  rook_apple_health: 0.2.0
+  rook_health_connect: 0.4.0
+  rook_apple_health: 0.3.0
   rook_transmission: 0.4.0
   logging: ">=1.0.0 <2.0.0"
   equatable: ">=2.0.0 <3.0.0"
