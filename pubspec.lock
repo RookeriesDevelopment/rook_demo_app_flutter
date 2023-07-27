@@ -308,10 +308,10 @@ packages:
     dependency: "direct main"
     description:
       name: rook_apple_health
-      sha256: "2ae197d6bd078834f63673e10739a497c0dd480067c7a9901a9d575b30883278"
+      sha256: "17665947cd7e44469131e13a9e005a6d78a0a909002c32c11ea749466bdb9487"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.0"
+    version: "0.3.1"
   rook_auth:
     dependency: "direct main"
     description:
