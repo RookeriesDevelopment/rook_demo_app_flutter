@@ -20,6 +20,8 @@ dependencies:
   receive_intent: ^0.2.3
   focus_detector: ">=2.0.0 <3.0.0"
   url_launcher: ">=6.0.0 <7.0.0"
+  http: ">=1.0.0 <2.0.0"
+  webview_flutter: 4.2.2
 
 dev_dependencies:
   flutter_test:

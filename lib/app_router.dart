@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:rook_demo_flutter/features/apple_health/ah_availability_screen.dart';
 import 'package:rook_demo_flutter/features/apple_health/ah_permissions_screen.dart';
 import 'package:rook_demo_flutter/features/apple_health/ah_playground_screen.dart';
+import 'package:rook_demo_flutter/features/connections_page/data/repository/default_data_source_repository.dart';
+import 'package:rook_demo_flutter/features/connections_page/screen/connections_page_screen.dart';
 import 'package:rook_demo_flutter/features/credentials_screen.dart';
 import 'package:rook_demo_flutter/features/health_connect/hc_availability_screen.dart';
 import 'package:rook_demo_flutter/features/health_connect/hc_permissions_screen.dart';
@@ -51,6 +53,12 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) => AHPlaygroundScreen(
             args: settings.arguments as AHPlaygroundScreenArgs,
+          ),
+        );
+      case connectionsPageRoute:
+        return MaterialPageRoute(
+          builder: (context) => ConnectionsPageScreen(
+            dataSourceRepository: DefaultDataSourceRepository(),
           ),
         );
       default:

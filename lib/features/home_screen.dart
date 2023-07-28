@@ -5,6 +5,7 @@ import 'package:logging/logging.dart';
 import 'package:rook_apple_health/rook_apple_health.dart';
 import 'package:rook_demo_flutter/features/apple_health/ah_availability_screen.dart';
 import 'package:rook_demo_flutter/features/auth/widget/rook_auth_status.dart';
+import 'package:rook_demo_flutter/features/connections_page/screen/connections_page_screen.dart';
 import 'package:rook_demo_flutter/features/health_connect/hc_availability_screen.dart';
 import 'package:rook_demo_flutter/secrets.dart';
 
@@ -37,6 +38,10 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () => navigate(context, hcAvailabilityScreenRoute),
                   child: const Text('Health Connect'),
                 ),
+              ElevatedButton(
+                onPressed: () => navigate(context, connectionsPageRoute),
+                child: const Text('Connections Page'),
+              ),
             ],
           ),
         ),
