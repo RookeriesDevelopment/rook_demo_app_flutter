@@ -316,34 +316,34 @@ packages:
     dependency: "direct main"
     description:
       name: rook_auth
-      sha256: d9099b8c6083c3c65c121199c3642cf64f245d4ed703664beabf32aa803779ba
+      sha256: "841d74774e8a15802b8be6ce28cafa4ff1eee53347e310daa5ae0c6a49107a36"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.0"
+    version: "0.3.0"
   rook_health_connect:
     dependency: "direct main"
     description:
       name: rook_health_connect
-      sha256: "1a79ab1b37b4e09af90983b9d89bddbe84870d853aa6d3b457016e598b56eea3"
+      sha256: "05d8c6a51ceddac3bcb375cc9c7a78db86caa8a0b0dbc8bf41eed12b6f60f4cd"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.0"
+    version: "0.5.0"
   rook_transmission:
     dependency: "direct main"
     description:
       name: rook_transmission
-      sha256: "798ac01a83896b76f11c829e8b4f70701252c9fe7754ccf87ce8082adbbd9f0d"
+      sha256: "3e68d9e83dd138dbf3424ade7afa8a42a386a2f1f96934216d137723913b22aa"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.0"
+    version: "0.5.0"
   rook_users:
     dependency: "direct main"
     description:
       name: rook_users
-      sha256: "23c4ee4e7c8baf879948fe6f054239ece609a16e430c6132f0b7f80237aad4d2"
+      sha256: "5136002f8690f3686447a19dcb42ff6c487fc97cb68e32736eb0f933d4fdf57d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.0"
+    version: "0.3.0"
   shared_preferences:
     dependency: transitive
     description:

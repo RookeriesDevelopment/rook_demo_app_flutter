@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:receive_intent/receive_intent.dart';
 import 'package:rook_demo_flutter/app_router.dart';
-import 'package:rook_demo_flutter/features/credentials_screen.dart';
 import 'package:rook_demo_flutter/features/health_connect/hc_privacy_policy_screen.dart';
+import 'package:rook_demo_flutter/features/home_screen.dart';
 
 import 'color_schemes.g.dart';
 
@@ -52,7 +52,7 @@ class RookApp extends StatelessWidget {
       title: 'Rook demo',
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-      initialRoute: credentialsScreenRoute,
+      initialRoute: homeScreenRoute,
       onGenerateRoute: _router.onGenerateRoute,
     );
   }

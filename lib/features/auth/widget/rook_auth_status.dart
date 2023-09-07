@@ -12,9 +12,7 @@ class RookAuthStatus extends StatefulWidget {
 }
 
 class _RookAuthStatusState extends State<RookAuthStatus> {
-  final AuthorizationProvider provider = AuthorizationProvider(
-    Secrets.rookAuthUrl,
-  );
+  final AuthorizationProvider provider = AuthorizationProvider();
 
   bool loading = false;
   AuthorizationResult? result;
