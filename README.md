@@ -1,33 +1,28 @@
-# rook extraction demo
+# Rook demo app flutter
 
-Demo app for rook connect data packages:
+Demo app for ROOK modular packages:
 
-* Extraction
-    * [rook_health_connect](https://pub.dev/packages/rook_health_connect)
-    * [rook_apple_health](https://pub.dev/packages/rook_apple_health)
-* Transmission
-    * [rook_transmission](https://pub.dev/packages/rook_transmission)
-* Users
-    * [rook_users](https://pub.dev/packages/rook_users)
+* [rook-auth](https://pub.dev/packages/rook_users)
+* [rook_users](https://pub.dev/packages/rook_users)
+* [rook_health_connect](https://pub.dev/packages/rook_health_connect)
+* [rook_apple_health](https://pub.dev/packages/rook_apple_health)
+* [rook_transmission](https://pub.dev/packages/rook_transmission)
 
-## Getting Started
+## Configure & Run
 
 1. In the lib folder create a secrets.dart file with a Secrets class and add the following
    constants:
 
 ```dart
 class Secrets {
-  static String rookAuthUrl = 'rookAuthUrl';
   static String userID = 'userID';
   static String clientUUID = 'clientUUID';
   static String clientPassword = 'clientPassword';
   static String rookUrl = 'rookUrl';
+  static String connectionsPageUrl = 'connectionsPageUrl';
 }
 ```
 
-* `userID` is defined by you, so feel free to use the same ID your app uses to identify it's users.
-
-* If you won't be using the [rook_transmission](https://pub.dev/packages/rook_transmission) package
-  you can assign `google.com` to `rookUrl` and `N/A` to `clientUUID`, `clientPassword` and `userID`.
-
 2. Run `flutter pub get`
+3. In the ios folder, ensure that your Podfile is targeted to ios 13+ (`platform :ios, '13.0'`)
+4. In the ios folder, run `pod install`
