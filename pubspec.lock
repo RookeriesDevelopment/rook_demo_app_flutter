@@ -308,10 +308,10 @@ packages:
     dependency: "direct main"
     description:
       name: rook_apple_health
-      sha256: "17665947cd7e44469131e13a9e005a6d78a0a909002c32c11ea749466bdb9487"
+      sha256: "2ce7744f5bf43b6feab8028013dc16bec574aa1c7082aea17c31ec719680ce8a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.1"
+    version: "0.3.2"
   rook_auth:
     dependency: "direct main"
     description:
@@ -324,18 +324,18 @@ packages:
     dependency: "direct main"
     description:
       name: rook_health_connect
-      sha256: "05d8c6a51ceddac3bcb375cc9c7a78db86caa8a0b0dbc8bf41eed12b6f60f4cd"
+      sha256: "11240dc371b24c8a1d1c8970b6111fad9e5b6b405f9d66ebcbbde34765c189c7"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.0"
+    version: "0.5.1"
   rook_transmission:
     dependency: "direct main"
     description:
       name: rook_transmission
-      sha256: "3e68d9e83dd138dbf3424ade7afa8a42a386a2f1f96934216d137723913b22aa"
+      sha256: "8abf1e9110819facb4838dcb0a57d350efcb48faadd59bdcf2d3cd6198336162"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.0"
+    version: "0.5.1"
   rook_users:
     dependency: "direct main"
     description:

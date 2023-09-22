@@ -35,6 +35,14 @@ class _AHPlaygroundScreenState extends State<AHPlaygroundScreen> {
   DateTime oldestDate = DateTime.now().subtract(twentyNineDays);
   DateTime soonestDate = DateTime.now();
 
+  bool userTimeZoneExtracting = false;
+  AHUserTimeZone? userTimeZoneExtracted;
+  String? userTimeZoneExtractError;
+
+  bool userTimeZoneUploading = false;
+  bool userTimeZoneUploaded = false;
+  String? userTimeZoneUploadError;
+
   DateTime sleepSummaryDate = DateTime.now();
   bool sleepSummaryExtracting = false;
   AHSleepSummary? sleepSummaryExtracted;
@@ -129,6 +137,22 @@ class _AHPlaygroundScreenState extends State<AHPlaygroundScreen> {
       alignment: Alignment.topCenter,
       child: Column(
         children: [
+          const SectionTitle('User Time Zone'),
+          ElevatedButton(
+            onPressed: userTimeZoneExtracting ? null : userTimeZoneExtract,
+            child: const Text('Extract'),
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: userTimeZoneUploading ? null : userTimeZoneUpload,
+            child: const Text('Upload this'),
+          ),
+          if (userTimeZoneUploaded) const Text('uploaded!'),
+          if (userTimeZoneUploadError != null) Text('Error: $userTimeZoneUploadError'),
+          const SizedBox(height: 10),
+          if (userTimeZoneExtracted != null) Text('$userTimeZoneExtracted'),
+          if (userTimeZoneExtractError != null) Text('Error: $userTimeZoneExtractError'),
+          sectionDivider,
           ...healthDataType<AHSleepSummary>(
             name: 'Sleep Summary',
             extract: sleepSummarySelector,
@@ -313,6 +337,61 @@ class _AHPlaygroundScreenState extends State<AHPlaygroundScreen> {
       );
     } catch (ignored) {
       return DateTime.now();
+    }
+  }
+
+  void userTimeZoneExtract() async {
+    setState(() {
+      userTimeZoneExtracting = true;
+      userTimeZoneExtracted = null;
+      userTimeZoneExtractError = null;
+    });
+
+    try {
+      final userTimeZone = await widget.args.appleHealth.getUserTimeZone();
+
+      setState(() {
+        userTimeZoneExtracting = false;
+        userTimeZoneExtracted = userTimeZone;
+        userTimeZoneExtractError = null;
+      });
+    } catch (error) {
+      setState(() {
+        userTimeZoneExtracting = false;
+        userTimeZoneExtracted = null;
+        userTimeZoneExtractError = '$error';
+      });
+    }
+  }
+
+  void userTimeZoneUpload() async {
+    if (userTimeZoneExtracted != null) {
+      setState(() {
+        userTimeZoneUploading = true;
+        userTimeZoneUploaded = false;
+        userTimeZoneUploadError = null;
+      });
+
+      try {
+        await widget.transmission.uploadUserTimeZone(
+          userTimeZoneExtracted!.timezone,
+          userTimeZoneExtracted!.offset,
+        );
+
+        setState(() {
+          userTimeZoneExtracted = null;
+
+          userTimeZoneUploading = false;
+          userTimeZoneUploaded = true;
+          userTimeZoneUploadError = null;
+        });
+      } catch (error) {
+        setState(() {
+          userTimeZoneUploading = false;
+          userTimeZoneUploaded = false;
+          userTimeZoneUploadError = '$error';
+        });
+      }
     }
   }
 

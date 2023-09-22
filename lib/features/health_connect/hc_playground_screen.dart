@@ -35,6 +35,14 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
   DateTime oldestDate = DateTime.now().subtract(twentyNineDays);
   DateTime soonestDate = DateTime.now();
 
+  bool userTimeZoneExtracting = false;
+  HCUserTimeZone? userTimeZoneExtracted;
+  String? userTimeZoneExtractError;
+
+  bool userTimeZoneUploading = false;
+  bool userTimeZoneUploaded = false;
+  String? userTimeZoneUploadError;
+
   DateTime sleepSummaryDate = DateTime.now().subtract(oneDay);
   bool sleepSummaryExtracting = false;
   HCSleepSummary? sleepSummaryExtracted;
@@ -201,6 +209,22 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
       alignment: Alignment.topCenter,
       child: Column(
         children: [
+          const SectionTitle('User Time Zone'),
+          ElevatedButton(
+            onPressed: userTimeZoneExtracting ? null : userTimeZoneExtract,
+            child: const Text('Extract'),
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: userTimeZoneUploading ? null : userTimeZoneUpload,
+            child: const Text('Upload this'),
+          ),
+          if (userTimeZoneUploaded) const Text('uploaded!'),
+          if (userTimeZoneUploadError != null) Text('Error: $userTimeZoneUploadError'),
+          const SizedBox(height: 10),
+          if (userTimeZoneExtracted != null) Text('$userTimeZoneExtracted'),
+          if (userTimeZoneExtractError != null) Text('Error: $userTimeZoneExtractError'),
+          sectionDivider,
           ...healthDataType<HCSleepSummary>(
             name: 'Sleep Summary',
             extract: sleepSummarySelector,
@@ -505,6 +529,61 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
       );
     } catch (ignored) {
       return DateTime.now().subtract(oneDay);
+    }
+  }
+
+  void userTimeZoneExtract() async {
+    setState(() {
+      userTimeZoneExtracting = true;
+      userTimeZoneExtracted = null;
+      userTimeZoneExtractError = null;
+    });
+
+    try {
+      final userTimeZone = await widget.args.healthConnect.getUserTimeZone();
+
+      setState(() {
+        userTimeZoneExtracting = false;
+        userTimeZoneExtracted = userTimeZone;
+        userTimeZoneExtractError = null;
+      });
+    } catch (error) {
+      setState(() {
+        userTimeZoneExtracting = false;
+        userTimeZoneExtracted = null;
+        userTimeZoneExtractError = '$error';
+      });
+    }
+  }
+
+  void userTimeZoneUpload() async {
+    if (userTimeZoneExtracted != null) {
+      setState(() {
+        userTimeZoneUploading = true;
+        userTimeZoneUploaded = false;
+        userTimeZoneUploadError = null;
+      });
+
+      try {
+        await widget.transmission.uploadUserTimeZone(
+          userTimeZoneExtracted!.timezone,
+          userTimeZoneExtracted!.offset,
+        );
+
+        setState(() {
+          userTimeZoneExtracted = null;
+
+          userTimeZoneUploading = false;
+          userTimeZoneUploaded = true;
+          userTimeZoneUploadError = null;
+        });
+      } catch (error) {
+        setState(() {
+          userTimeZoneUploading = false;
+          userTimeZoneUploaded = false;
+          userTimeZoneUploadError = '$error';
+        });
+      }
     }
   }
 
@@ -865,7 +944,8 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
       });
 
       try {
-        final event = await widget.args.healthConnect.getBodyBloodPressureEvents(
+        final event =
+        await widget.args.healthConnect.getBodyBloodPressureEvents(
           selectedDate,
         );
 
@@ -1072,7 +1152,8 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
       });
 
       try {
-        final event = await widget.args.healthConnect.getPhysicalHeartRateEvents(
+        final event =
+        await widget.args.healthConnect.getPhysicalHeartRateEvents(
           selectedDate,
         );
 
@@ -1417,7 +1498,8 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
       });
 
       try {
-        final event = await widget.args.healthConnect.getPhysicalOxygenationEvents(
+        final event =
+        await widget.args.healthConnect.getPhysicalOxygenationEvents(
           selectedDate,
         );
 
