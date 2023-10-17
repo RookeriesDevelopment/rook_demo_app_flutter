@@ -4,7 +4,6 @@ import 'package:rook_demo_flutter/features/apple_health/ah_permissions_screen.da
 import 'package:rook_demo_flutter/features/apple_health/ah_playground_screen.dart';
 import 'package:rook_demo_flutter/features/connections_page/data/repository/default_data_source_repository.dart';
 import 'package:rook_demo_flutter/features/connections_page/screen/connections_page_screen.dart';
-import 'package:rook_demo_flutter/features/credentials_screen.dart';
 import 'package:rook_demo_flutter/features/health_connect/hc_availability_screen.dart';
 import 'package:rook_demo_flutter/features/health_connect/hc_permissions_screen.dart';
 import 'package:rook_demo_flutter/features/health_connect/hc_playground_screen.dart';
@@ -13,10 +12,6 @@ import 'package:rook_demo_flutter/features/home_screen.dart';
 class AppRouter {
   Route<Object?>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case credentialsScreenRoute:
-        return MaterialPageRoute(
-          builder: (context) => const CredentialsScreen(),
-        );
       case homeScreenRoute:
         return MaterialPageRoute(
           builder: (context) => HomeScreen(),
@@ -39,9 +34,7 @@ class AppRouter {
         );
       case ahAvailabilityScreenRoute:
         return MaterialPageRoute(
-          builder: (context) => AHAvailabilityScreen(
-            args: settings.arguments as AHAvailabilityScreenArgs,
-          ),
+          builder: (context) => AHAvailabilityScreen(),
         );
       case ahPermissionsScreenRoute:
         return MaterialPageRoute(

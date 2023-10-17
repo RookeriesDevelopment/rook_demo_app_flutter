@@ -4,9 +4,7 @@ import 'package:rook_demo_flutter/features/connections_page/domain/model/data_so
 import 'package:rook_demo_flutter/secrets.dart';
 
 class DefaultDataSourceRepository {
-  final DataSourcesApiService dataSourcesApiService = DataSourcesApiService(
-    baseUrl: Secrets.rookUrl,
-  );
+  final DataSourcesApiService dataSourcesApiService = DataSourcesApiService();
 
   Future<List<DataSource>> getDataSources(
     String clientUUID,

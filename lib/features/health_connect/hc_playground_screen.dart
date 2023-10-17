@@ -17,7 +17,6 @@ class HCPlaygroundScreenArgs {
 
 class HCPlaygroundScreen extends StatefulWidget {
   final RookTransmissionManager transmission = RookTransmissionManager(
-    Secrets.rookUrl,
     Secrets.userID,
     Secrets.clientUUID,
     Secrets.clientPassword,
@@ -133,15 +132,6 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
   bool hydrationEventEnqueued = false;
   String? hydrationEventEnqueueError;
 
-  DateTime moodEventDate = DateTime.now().subtract(oneDay);
-  bool moodEventExtracting = false;
-  List<HCMoodEvent>? moodEventExtracted;
-  String? moodEventExtractError;
-
-  bool moodEventEnqueueing = false;
-  bool moodEventEnqueued = false;
-  String? moodEventEnqueueError;
-
   DateTime nutritionEventDate = DateTime.now().subtract(oneDay);
   bool nutritionEventExtracting = false;
   List<HCNutritionEvent>? nutritionEventExtracted;
@@ -168,15 +158,6 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
   bool oxygenationPhysicalEventEnqueueing = false;
   bool oxygenationPhysicalEventEnqueued = false;
   String? oxygenationPhysicalEventEnqueueError;
-
-  DateTime stressEventDate = DateTime.now().subtract(oneDay);
-  bool stressEventExtracting = false;
-  List<HCStressEvent>? stressEventExtracted;
-  String? stressEventExtractError;
-
-  bool stressEventEnqueueing = false;
-  bool stressEventEnqueued = false;
-  String? stressEventEnqueueError;
 
   DateTime temperatureEventDate = DateTime.now().subtract(oneDay);
   bool temperatureEventExtracting = false;
@@ -335,17 +316,6 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
             enqueued: hydrationEventEnqueued,
             enqueueError: hydrationEventEnqueueError,
           ),
-          ...healthDataType<List<HCMoodEvent>>(
-            name: 'Mood Event',
-            extract: moodEventSelector,
-            extracting: moodEventExtracting,
-            extracted: moodEventExtracted,
-            extractError: moodEventExtractError,
-            enqueue: moodEventEnqueue,
-            enqueueing: moodEventEnqueueing,
-            enqueued: moodEventEnqueued,
-            enqueueError: moodEventEnqueueError,
-          ),
           ...healthDataType<List<HCNutritionEvent>>(
             name: 'Nutrition Event',
             extract: nutritionEventSelector,
@@ -378,17 +348,6 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
             enqueueing: oxygenationPhysicalEventEnqueueing,
             enqueued: oxygenationPhysicalEventEnqueued,
             enqueueError: oxygenationPhysicalEventEnqueueError,
-          ),
-          ...healthDataType<List<HCStressEvent>>(
-            name: 'Stress Event',
-            extract: stressEventSelector,
-            extracting: stressEventExtracting,
-            extracted: stressEventExtracted,
-            extractError: stressEventExtractError,
-            enqueue: stressEventEnqueue,
-            enqueueing: stressEventEnqueueing,
-            enqueued: stressEventEnqueued,
-            enqueueError: stressEventEnqueueError,
           ),
           ...healthDataType<List<HCTemperatureEvent>>(
             name: 'Temperature Event',
@@ -483,9 +442,6 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
     final hydrationEventDate = await _getLastExtractionDate(
       HCRookDataType.hydrationBodyEvent,
     );
-    final moodEventDate = await _getLastExtractionDate(
-      HCRookDataType.moodBodyEvent,
-    );
     final nutritionEventDate = await _getLastExtractionDate(
       HCRookDataType.nutritionBodyEvent,
     );
@@ -494,9 +450,6 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
     );
     final oxygenationPhysicalEventDate = await _getLastExtractionDate(
       HCRookDataType.oxygenationPhysicalEvent,
-    );
-    final stressEventDate = await _getLastExtractionDate(
-      HCRookDataType.stressPhysicalEvent,
     );
     final temperatureEventDate = await _getLastExtractionDate(
       HCRookDataType.temperatureBodyEvent,
@@ -513,11 +466,9 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
       this.heartRateBodyEventDate = heartRateBodyEventDate;
       this.heartRatePhysicalEventDate = heartRatePhysicalEventDate;
       this.hydrationEventDate = hydrationEventDate;
-      this.moodEventDate = moodEventDate;
       this.nutritionEventDate = nutritionEventDate;
       this.oxygenationBodyEventDate = oxygenationBodyEventDate;
       this.oxygenationPhysicalEventDate = oxygenationPhysicalEventDate;
-      this.stressEventDate = stressEventDate;
       this.temperatureEventDate = temperatureEventDate;
     });
   }
@@ -1273,75 +1224,6 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
     }
   }
 
-  void moodEventSelector() {
-    showDatePicker(
-      context: context,
-      initialDate: moodEventDate,
-      firstDate: oldestDate,
-      lastDate: soonestDate,
-    ).then((selected) => moodEventExtract(selected));
-  }
-
-  void moodEventExtract(DateTime? selectedDate) async {
-    if (selectedDate != null) {
-      setState(() {
-        moodEventExtracting = true;
-        moodEventExtracted = null;
-        moodEventExtractError = null;
-      });
-
-      try {
-        final event = await widget.args.healthConnect.getBodyMoodEvents(
-          selectedDate,
-        );
-
-        setState(() {
-          moodEventExtracting = false;
-          moodEventExtracted = event;
-          moodEventExtractError = null;
-        });
-      } catch (error) {
-        setState(() {
-          moodEventExtracting = false;
-          moodEventExtracted = null;
-          moodEventExtractError = '$error';
-        });
-      }
-    }
-  }
-
-  void moodEventEnqueue() async {
-    if (moodEventExtracted != null) {
-      setState(() {
-        moodEventEnqueueing = true;
-        moodEventEnqueued = false;
-        moodEventEnqueueError = null;
-      });
-
-      try {
-        for (final event in moodEventExtracted!) {
-          final item = event.toItem();
-
-          await widget.transmission.enqueueMoodEvent(item);
-        }
-
-        setState(() {
-          moodEventExtracted = null;
-
-          moodEventEnqueueing = false;
-          moodEventEnqueued = true;
-          moodEventEnqueueError = null;
-        });
-      } catch (error) {
-        setState(() {
-          moodEventEnqueueing = false;
-          moodEventEnqueued = false;
-          moodEventEnqueueError = '$error';
-        });
-      }
-    }
-  }
-
   void nutritionEventSelector() {
     showDatePicker(
       context: context,
@@ -1545,75 +1427,6 @@ class _HCPlaygroundScreenState extends State<HCPlaygroundScreen> {
           oxygenationPhysicalEventEnqueueing = false;
           oxygenationPhysicalEventEnqueued = false;
           oxygenationPhysicalEventEnqueueError = '$error';
-        });
-      }
-    }
-  }
-
-  void stressEventSelector() {
-    showDatePicker(
-      context: context,
-      initialDate: stressEventDate,
-      firstDate: oldestDate,
-      lastDate: soonestDate,
-    ).then((selected) => stressEventExtract(selected));
-  }
-
-  void stressEventExtract(DateTime? selectedDate) async {
-    if (selectedDate != null) {
-      setState(() {
-        stressEventExtracting = true;
-        stressEventExtracted = null;
-        stressEventExtractError = null;
-      });
-
-      try {
-        final event = await widget.args.healthConnect.getPhysicalStressEvents(
-          selectedDate,
-        );
-
-        setState(() {
-          stressEventExtracting = false;
-          stressEventExtracted = event;
-          stressEventExtractError = null;
-        });
-      } catch (error) {
-        setState(() {
-          stressEventExtracting = false;
-          stressEventExtracted = null;
-          stressEventExtractError = '$error';
-        });
-      }
-    }
-  }
-
-  void stressEventEnqueue() async {
-    if (stressEventExtracted != null) {
-      setState(() {
-        stressEventEnqueueing = true;
-        stressEventEnqueued = false;
-        stressEventEnqueueError = null;
-      });
-
-      try {
-        for (final event in stressEventExtracted!) {
-          final item = event.toItem();
-
-          await widget.transmission.enqueueStressEvent(item);
-        }
-
-        setState(() {
-          stressEventExtracted = null;
-
-          stressEventEnqueueing = false;
-          stressEventEnqueued = true;
-          stressEventEnqueueError = null;
-        });
-      } catch (error) {
-        setState(() {
-          stressEventEnqueueing = false;
-          stressEventEnqueued = false;
-          stressEventEnqueueError = '$error';
         });
       }
     }

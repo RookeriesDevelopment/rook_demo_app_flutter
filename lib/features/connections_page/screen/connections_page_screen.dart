@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rook_demo_flutter/features/connections_page/data/repository/default_data_source_repository.dart';
 import 'package:rook_demo_flutter/features/connections_page/domain/model/data_source.dart';
@@ -124,6 +125,10 @@ class _ConnectionsPageScreenState extends State<ConnectionsPageScreen> {
   }
 
   bool isHomePageUrl(String url) {
-    return url.startsWith('https://${Secrets.connectionsPageUrl}/');
+    return url.startsWith(connectionsPageUrl);
   }
 }
+
+const String connectionsPageUrl = kDebugMode
+    ? 'https://connections.rook-connect.review/'
+    : 'https://connections.rook-connect.com/';

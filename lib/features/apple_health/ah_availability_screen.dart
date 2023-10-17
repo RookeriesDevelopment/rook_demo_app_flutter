@@ -8,16 +8,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 const String ahAvailabilityScreenRoute = '/apple-health/availability';
 
-class AHAvailabilityScreenArgs {
-  final RookAppleHealthManager manager;
-
-  const AHAvailabilityScreenArgs({required this.manager});
-}
-
 class AHAvailabilityScreen extends StatefulWidget {
-  final AHAvailabilityScreenArgs args;
+  final RookAppleHealthManager manager = RookAppleHealthManager();
 
-  const AHAvailabilityScreen({Key? key, required this.args}) : super(key: key);
+  AHAvailabilityScreen({Key? key}) : super(key: key);
 
   @override
   State<AHAvailabilityScreen> createState() => _AHAvailabilityScreenState();
@@ -63,7 +57,7 @@ class _AHAvailabilityScreenState extends State<AHAvailabilityScreen> {
 
   void updateAvailability() async {
     try {
-      final result = await widget.args.manager.checkAvailability();
+      final result = await widget.manager.checkAvailability();
 
       setState(() {
         available = result;
@@ -79,7 +73,8 @@ class _AHAvailabilityScreenState extends State<AHAvailabilityScreen> {
 
   void openAppStore() async {
     try {
-      await launchUrl(Uri.parse('https://apps.apple.com/app/apple-health/id1242545199'));
+      await launchUrl(
+          Uri.parse('https://apps.apple.com/app/apple-health/id1242545199'));
     } catch (ignored) {
       // Ignored
     }
@@ -88,7 +83,7 @@ class _AHAvailabilityScreenState extends State<AHAvailabilityScreen> {
   void goToPermissions(BuildContext context) {
     Navigator.of(context).pushReplacementNamed(
       ahPermissionsScreenRoute,
-      arguments: AHPermissionsScreenArgs(manager: widget.args.manager),
+      arguments: AHPermissionsScreenArgs(manager: widget.manager),
     );
   }
 }

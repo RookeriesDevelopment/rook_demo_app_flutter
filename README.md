@@ -2,7 +2,6 @@
 
 Demo app for ROOK modular packages:
 
-* [rook-auth](https://pub.dev/packages/rook_users)
 * [rook_users](https://pub.dev/packages/rook_users)
 * [rook_health_connect](https://pub.dev/packages/rook_health_connect)
 * [rook_apple_health](https://pub.dev/packages/rook_apple_health)
@@ -18,8 +17,6 @@ class Secrets {
   static String userID = 'userID';
   static String clientUUID = 'clientUUID';
   static String clientPassword = 'clientPassword';
-  static String rookUrl = 'rookUrl';
-  static String connectionsPageUrl = 'connectionsPageUrl';
 }
 ```
 

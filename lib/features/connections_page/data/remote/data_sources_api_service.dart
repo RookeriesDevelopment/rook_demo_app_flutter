@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:rook_demo_flutter/common/extension/response_extensions.dart';
 
@@ -10,13 +11,13 @@ import 'dto/data_source_dto.dart';
 class DataSourcesApiService {
   final Client _client = Client();
 
-  final String _baseUrl;
+  final String _baseUrl =
+      kDebugMode ? 'api.rook-connect.review' : 'api.rook-connect.com';
 
   final String _apiVersion = '/api/v1/';
 
-  DataSourcesApiService({required String baseUrl}) : _baseUrl = baseUrl;
-
-  Future<List<DataSourceDto>> getDataSources(String clientUUID, String userID) async {
+  Future<List<DataSourceDto>> getDataSources(
+      String clientUUID, String userID) async {
     final uri = Uri.https(
       _baseUrl,
       '${_apiVersion}client_uuid/$clientUUID/user_id/$userID/configuration',

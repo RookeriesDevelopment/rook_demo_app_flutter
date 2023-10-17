@@ -11,7 +11,6 @@ class RookUserStatus extends StatefulWidget {
 
 class _RookUserStatusState extends State<RookUserStatus> {
   final RookUsersManager manager = RookUsersManager(
-    Secrets.rookUrl,
     Secrets.clientUUID,
     Secrets.clientPassword,
   );
@@ -48,7 +47,7 @@ class _RookUserStatusState extends State<RookUserStatus> {
             ),
           ),
         const SizedBox(height: 10),
-        if (!loading && error != null) Text('Error: $error'),
+        if (!loading && error != null) Text('$error'),
         if (!loading && error != null)
           TextButton(
             onPressed: initialize,
@@ -97,10 +96,10 @@ class _RookUserStatusState extends State<RookUserStatus> {
         ahUser = ah;
         error = null;
       });
-    } catch (e) {
+    } catch (exception) {
       setState(() {
         loading = false;
-        error = 'Error: $e';
+        error = '$exception';
       });
     }
   }
