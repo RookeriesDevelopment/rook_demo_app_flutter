@@ -74,7 +74,7 @@ class _HCPermissionsScreenState extends State<HCPermissionsScreen> {
 
   void updatePermissions() async {
     try {
-      final granted = await widget.args.manager.hasAllPermissions();
+      final granted = await widget.args.manager.checkPermissions(HCPermission.all);
 
       setState(() {
         permissionsGranted = granted;
@@ -90,7 +90,7 @@ class _HCPermissionsScreenState extends State<HCPermissionsScreen> {
 
   void requestPermissions() async {
     try {
-      final success = await widget.args.manager.requestAllPermissions();
+      final success = await widget.args.manager.requestPermissions(HCPermission.all);
     } catch (ignored) {
       // Ignored
     }

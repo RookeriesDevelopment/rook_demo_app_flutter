@@ -380,10 +380,10 @@ packages:
     dependency: "direct main"
     description:
       name: rook_health_connect
-      sha256: aea6585aa89e4e3951dbe0c1bc773b5847b6152044ebe73e9a59cf50bda9304a
+      sha256: "172c75b3b27a5317b4e69be75333cf94f1eef137be7a9c26e187c82f36c584c5"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.0"
+    version: "0.7.1"
   rook_transmission:
     dependency: "direct main"
     description:
