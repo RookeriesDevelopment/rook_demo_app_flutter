@@ -155,7 +155,7 @@ class _RookAuthStatusState extends State<RookAuthStatus> {
     });
   }
 
-  void initializeHealthConnect() {
+  void initializeHealthConnect() async {
     setState(() => healthConnectInitialization = InitializationLoading());
 
     const environment = kDebugMode
@@ -164,18 +164,24 @@ class _RookAuthStatusState extends State<RookAuthStatus> {
 
     const enableNativeLogs = kDebugMode;
 
-    RookHealthConnectConfiguration.initRookHealthConnect(
-      Secrets.clientUUID,
-      environment,
-      enableNativeLogs,
-    ).then((value) {
+    try {
+      final value = await RookHealthConnectConfiguration.initRookHealthConnect(
+        Secrets.clientUUID,
+        Secrets.secretKey,
+        environment,
+        enableNativeLogs,
+      );
+
+      // Needed to enable data source updates and to configure the owner of HC summaries and events
+      await RookHealthConnectConfiguration.setUserID(Secrets.userID);
+
       setState(
           () => healthConnectInitialization = InitializationSuccess(value));
-    }).catchError((exception) {
+    } catch (exception) {
       final error = 'RookHealthConnectConfiguration: $exception';
 
       setState(() => healthConnectInitialization = InitializationError(error));
-    });
+    }
   }
 
   void initializeAppleHealth() {

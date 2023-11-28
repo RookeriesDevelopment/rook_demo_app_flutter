@@ -16,7 +16,7 @@ Demo app for ROOK modular packages:
 class Secrets {
   static String userID = 'userID';
   static String clientUUID = 'clientUUID';
-  static String clientPassword = 'clientPassword';
+  static String secretKey = 'secretKey';
 }
 ```
 

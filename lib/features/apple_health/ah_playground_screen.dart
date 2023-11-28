@@ -19,7 +19,7 @@ class AHPlaygroundScreen extends StatefulWidget {
   final RookTransmissionManager transmission = RookTransmissionManager(
     Secrets.userID,
     Secrets.clientUUID,
-    Secrets.clientPassword,
+    Secrets.secretKey,
   );
 
   final AHPlaygroundScreenArgs args;

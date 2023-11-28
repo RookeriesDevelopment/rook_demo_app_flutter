@@ -10,9 +10,9 @@ class RookUserStatus extends StatefulWidget {
 }
 
 class _RookUserStatusState extends State<RookUserStatus> {
-  final RookUsersManager manager = RookUsersManager(
+  final RookUsersManager rookUsersManager = RookUsersManager(
     Secrets.clientUUID,
-    Secrets.clientPassword,
+    Secrets.secretKey,
   );
 
   bool loading = false;
@@ -42,6 +42,12 @@ class _RookUserStatusState extends State<RookUserStatus> {
                   const Center(child: Text('Users')),
                   ...userData(hcUser!),
                   ...userData(ahUser!),
+                  Center(
+                    child: TextButton(
+                      onPressed: deleteUser,
+                      child: const Text('Delete user'),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -66,7 +72,7 @@ class _RookUserStatusState extends State<RookUserStatus> {
           const SizedBox(width: 10),
           Expanded(
             child: Text(
-              '${rookUser.type.sourceOfData}: ${rookUser.id} is registered!',
+              '${rookUser.type.identifier}: ${rookUser.id} is registered!',
             ),
           ),
         ],
@@ -80,12 +86,12 @@ class _RookUserStatusState extends State<RookUserStatus> {
     try {
       await Future.delayed(const Duration(seconds: 1));
 
-      final hc = await manager.registerRookUser(
+      final hc = await rookUsersManager.registerRookUser(
         Secrets.userID,
         UserType.healthConnect,
       );
 
-      final ah = await manager.registerRookUser(
+      final ah = await rookUsersManager.registerRookUser(
         Secrets.userID,
         UserType.appleHealth,
       );
@@ -101,6 +107,27 @@ class _RookUserStatusState extends State<RookUserStatus> {
         loading = false;
         error = '$exception';
       });
+    }
+  }
+
+  void deleteUser() async {
+    setState(() => loading = true);
+
+    try {
+      await rookUsersManager.deleteUserFromRook(
+          Secrets.userID, UserType.healthConnect);
+      await rookUsersManager.deleteUserFromRook(
+          Secrets.userID, UserType.appleHealth);
+
+      setState(() {
+        loading = false;
+        hcUser = null;
+        ahUser = null;
+        error =
+            "User was deleted, click on 'retry' to start a new registration request";
+      });
+    } catch (exception) {
+      setState(() => loading = false);
     }
   }
 }

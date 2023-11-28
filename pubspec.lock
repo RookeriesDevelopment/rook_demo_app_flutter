@@ -380,26 +380,26 @@ packages:
     dependency: "direct main"
     description:
       name: rook_health_connect
-      sha256: "267cbc0eb30da39ee22e05890744fa05397ebc2144d79af72245e6bf59b714f6"
+      sha256: "0fd3f8837cc083e38433ddb6cc95270f30c818de607b841893c776946cc32fd1"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.2"
+    version: "0.8.0"
   rook_transmission:
     dependency: "direct main"
     description:
       name: rook_transmission
-      sha256: "91b4a0279ed2ae7e50fee3b6ab819c0c4554865debe8e21b22f6715ace7308bc"
+      sha256: a06dcffb61c0cde4e56a423cb60ca91f688f61ffa3ab851b60964e8c6f124af9
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.1"
+    version: "0.7.0"
   rook_users:
     dependency: "direct main"
     description:
       name: rook_users
-      sha256: "59fe4b5a9e2ea82107259401a0babbf3237529e07f62026535593c35c98f6b67"
+      sha256: fbbf0c9b78d639acf5d3e757dc2e267b77559c00313e0cfcc057f5939711e7c5
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.1"
+    version: "0.5.0"
   shared_preferences:
     dependency: transitive
     description:
