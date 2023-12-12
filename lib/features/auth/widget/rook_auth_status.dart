@@ -187,12 +187,12 @@ class _RookAuthStatusState extends State<RookAuthStatus> {
   void initializeAppleHealth() {
     setState(() => appleHealthInitialization = InitializationLoading());
 
-    const environment = kDebugMode
-        ? RookAppleHealthEnvironment.sandbox
-        : RookAppleHealthEnvironment.production;
+    const environment =
+    kDebugMode ? RookAppleHealthEnvironment.sandbox : RookAppleHealthEnvironment.production;
 
     RookAppleHealthConfiguration.initRookAppleHealth(
       Secrets.clientUUID,
+      Secrets.secretKey,
       environment,
     ).then((value) {
       setState(() => appleHealthInitialization = InitializationSuccess(null));

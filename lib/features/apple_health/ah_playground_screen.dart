@@ -78,6 +78,24 @@ class _AHPlaygroundScreenState extends State<AHPlaygroundScreen> {
   bool bodySummaryEnqueued = false;
   String? bodySummaryEnqueueError;
 
+  DateTime bloodGlucoseEventDate = DateTime.now();
+  bool bloodGlucoseEventExtracting = false;
+  List<AHBloodGlucoseEvent>? bloodGlucoseEventExtracted;
+  String? bloodGlucoseEventExtractError;
+
+  bool bloodGlucoseEventEnqueueing = false;
+  bool bloodGlucoseEventEnqueued = false;
+  String? bloodGlucoseEventEnqueueError;
+
+  DateTime bloodPressureEventDate = DateTime.now();
+  bool bloodPressureEventExtracting = false;
+  List<AHBloodPressureEvent>? bloodPressureEventExtracted;
+  String? bloodPressureEventExtractError;
+
+  bool bloodPressureEventEnqueueing = false;
+  bool bloodPressureEventEnqueued = false;
+  String? bloodPressureEventEnqueueError;
+
   DateTime heartRateBodyEventDate = DateTime.now();
   bool heartRateBodyEventExtracting = false;
   List<AHHeartRateEvent>? heartRateBodyEventExtracted;
@@ -113,6 +131,15 @@ class _AHPlaygroundScreenState extends State<AHPlaygroundScreen> {
   bool oxygenationPhysicalEventEnqueueing = false;
   bool oxygenationPhysicalEventEnqueued = false;
   String? oxygenationPhysicalEventEnqueueError;
+
+  DateTime temperatureEventDate = DateTime.now();
+  bool temperatureEventExtracting = false;
+  List<AHTemperatureEvent>? temperatureEventExtracted;
+  String? temperatureEventExtractError;
+
+  bool temperatureEventEnqueueing = false;
+  bool temperatureEventEnqueued = false;
+  String? temperatureEventEnqueueError;
 
   bool syncing = false;
   bool? synced;
@@ -196,6 +223,28 @@ class _AHPlaygroundScreenState extends State<AHPlaygroundScreen> {
             enqueued: bodySummaryEnqueued,
             enqueueError: bodySummaryEnqueueError,
           ),
+          ...healthDataType<List<AHBloodGlucoseEvent>>(
+            name: 'Blood Glucose Event',
+            extract: bloodGlucoseEventSelector,
+            extracting: bloodGlucoseEventExtracting,
+            extracted: bloodGlucoseEventExtracted,
+            extractError: bloodGlucoseEventExtractError,
+            enqueue: bloodGlucoseEventEnqueue,
+            enqueueing: bloodGlucoseEventEnqueueing,
+            enqueued: bloodGlucoseEventEnqueued,
+            enqueueError: bloodGlucoseEventEnqueueError,
+          ),
+          ...healthDataType<List<AHBloodPressureEvent>>(
+            name: 'Blood Pressure Event',
+            extract: bloodPressureEventSelector,
+            extracting: bloodPressureEventExtracting,
+            extracted: bloodPressureEventExtracted,
+            extractError: bloodPressureEventExtractError,
+            enqueue: bloodPressureEventEnqueue,
+            enqueueing: bloodPressureEventEnqueueing,
+            enqueued: bloodPressureEventEnqueued,
+            enqueueError: bloodPressureEventEnqueueError,
+          ),
           ...healthDataType<List<AHHeartRateEvent>>(
             name: 'Heart Rate Body Event',
             extract: heartRateBodyEventSelector,
@@ -239,6 +288,17 @@ class _AHPlaygroundScreenState extends State<AHPlaygroundScreen> {
             enqueueing: oxygenationPhysicalEventEnqueueing,
             enqueued: oxygenationPhysicalEventEnqueued,
             enqueueError: oxygenationPhysicalEventEnqueueError,
+          ),
+          ...healthDataType<List<AHTemperatureEvent>>(
+            name: 'Temperature Event',
+            extract: temperatureEventSelector,
+            extracting: temperatureEventExtracting,
+            extracted: temperatureEventExtracted,
+            extractError: temperatureEventExtractError,
+            enqueue: temperatureEventEnqueue,
+            enqueueing: temperatureEventEnqueueing,
+            enqueued: temperatureEventEnqueued,
+            enqueueError: temperatureEventEnqueueError,
           ),
           const SectionTitle('Sync'),
           ElevatedButton(
@@ -304,6 +364,12 @@ class _AHPlaygroundScreenState extends State<AHPlaygroundScreen> {
     final bodySummaryDate = await _getLastExtractionDate(
       AHRookDataType.bodySummary,
     );
+    final bloodGlucoseEventDate = await _getLastExtractionDate(
+      AHRookDataType.bloodGlucoseBodyEvent,
+    );
+    final bloodPressureEventDate = await _getLastExtractionDate(
+      AHRookDataType.bloodPressureBodyEvent,
+    );
     final heartRateBodyEventDate = await _getLastExtractionDate(
       AHRookDataType.heartRateBodyEvent,
     );
@@ -316,16 +382,22 @@ class _AHPlaygroundScreenState extends State<AHPlaygroundScreen> {
     final oxygenationPhysicalEventDate = await _getLastExtractionDate(
       AHRookDataType.oxygenationPhysicalEvent,
     );
+    final temperatureEventDate = await _getLastExtractionDate(
+      AHRookDataType.temperatureBodyEvent,
+    );
 
     setState(() {
       this.sleepSummaryDate = sleepSummaryDate;
       this.physicalSummaryDate = physicalSummaryDate;
       this.physicalEventDate = physicalEventDate;
       this.bodySummaryDate = bodySummaryDate;
+      this.bloodGlucoseEventDate = bloodGlucoseEventDate;
+      this.bloodPressureEventDate = bloodPressureEventDate;
       this.heartRateBodyEventDate = heartRateBodyEventDate;
       this.heartRatePhysicalEventDate = heartRatePhysicalEventDate;
       this.oxygenationBodyEventDate = oxygenationBodyEventDate;
       this.oxygenationPhysicalEventDate = oxygenationPhysicalEventDate;
+      this.temperatureEventDate = temperatureEventDate;
     });
   }
 
@@ -664,6 +736,145 @@ class _AHPlaygroundScreenState extends State<AHPlaygroundScreen> {
     }
   }
 
+  void bloodGlucoseEventSelector() {
+    showDatePicker(
+      context: context,
+      initialDate: bloodGlucoseEventDate,
+      firstDate: oldestDate,
+      lastDate: soonestDate,
+    ).then((selected) => bloodGlucoseEventExtract(selected));
+  }
+
+  void bloodGlucoseEventExtract(DateTime? selectedDate) async {
+    if (selectedDate != null) {
+      setState(() {
+        bloodGlucoseEventExtracting = true;
+        bloodGlucoseEventExtracted = null;
+        bloodGlucoseEventExtractError = null;
+      });
+
+      try {
+        final event = await widget.args.appleHealth.getBodyBloodGlucoseEvents(
+          selectedDate,
+        );
+
+        setState(() {
+          bloodGlucoseEventExtracting = false;
+          bloodGlucoseEventExtracted = event;
+          bloodGlucoseEventExtractError = null;
+        });
+      } catch (error) {
+        setState(() {
+          bloodGlucoseEventExtracting = false;
+          bloodGlucoseEventExtracted = null;
+          bloodGlucoseEventExtractError = '$error';
+        });
+      }
+    }
+  }
+
+  void bloodGlucoseEventEnqueue() async {
+    if (bloodGlucoseEventExtracted != null) {
+      setState(() {
+        bloodGlucoseEventEnqueueing = true;
+        bloodGlucoseEventEnqueued = false;
+        bloodGlucoseEventEnqueueError = null;
+      });
+
+      try {
+        for (final event in bloodGlucoseEventExtracted!) {
+          final item = event.toItem();
+
+          await widget.transmission.enqueueBloodGlucoseEvent(item);
+        }
+
+        setState(() {
+          bloodGlucoseEventExtracted = null;
+
+          bloodGlucoseEventEnqueueing = false;
+          bloodGlucoseEventEnqueued = true;
+          bloodGlucoseEventEnqueueError = null;
+        });
+      } catch (error) {
+        setState(() {
+          bloodGlucoseEventEnqueueing = false;
+          bloodGlucoseEventEnqueued = false;
+          bloodGlucoseEventEnqueueError = '$error';
+        });
+      }
+    }
+  }
+
+  void bloodPressureEventSelector() {
+    showDatePicker(
+      context: context,
+      initialDate: bloodPressureEventDate,
+      firstDate: oldestDate,
+      lastDate: soonestDate,
+    ).then((selected) => bloodPressureEventExtract(selected));
+  }
+
+  void bloodPressureEventExtract(DateTime? selectedDate) async {
+    if (selectedDate != null) {
+      setState(() {
+        bloodPressureEventExtracting = true;
+        bloodPressureEventExtracted = null;
+        bloodPressureEventExtractError = null;
+      });
+
+      try {
+        final event =
+        await widget.args.appleHealth.getBodyBloodPressureEvents(
+          selectedDate,
+        );
+
+        setState(() {
+          bloodPressureEventExtracting = false;
+          bloodPressureEventExtracted = event;
+          bloodPressureEventExtractError = null;
+        });
+      } catch (error) {
+        setState(() {
+          bloodPressureEventExtracting = false;
+          bloodPressureEventExtracted = null;
+          bloodPressureEventExtractError = '$error';
+        });
+      }
+    }
+  }
+
+  void bloodPressureEventEnqueue() async {
+    if (bloodPressureEventExtracted != null) {
+      setState(() {
+        bloodPressureEventEnqueueing = true;
+        bloodPressureEventEnqueued = false;
+        bloodPressureEventEnqueueError = null;
+      });
+
+      try {
+        for (final event in bloodPressureEventExtracted!) {
+          final item = event.toItem();
+
+          await widget.transmission.enqueueBloodPressureEvent(item);
+        }
+
+        setState(() {
+          bloodPressureEventExtracted = null;
+
+          bloodPressureEventEnqueueing = false;
+          bloodPressureEventEnqueued = true;
+          bloodPressureEventEnqueueError = null;
+        });
+      } catch (error) {
+        setState(() {
+          bloodPressureEventEnqueueing = false;
+          bloodPressureEventEnqueued = false;
+          bloodPressureEventEnqueueError = '$error';
+        });
+      }
+    }
+  }
+
   void heartRateBodyEventSelector() {
     showDatePicker(
       context: context,
@@ -938,6 +1149,75 @@ class _AHPlaygroundScreenState extends State<AHPlaygroundScreen> {
     }
   }
 
+  void temperatureEventSelector() {
+    showDatePicker(
+      context: context,
+      initialDate: temperatureEventDate,
+      firstDate: oldestDate,
+      lastDate: soonestDate,
+    ).then((selected) => temperatureEventExtract(selected));
+  }
+
+  void temperatureEventExtract(DateTime? selectedDate) async {
+    if (selectedDate != null) {
+      setState(() {
+        temperatureEventExtracting = true;
+        temperatureEventExtracted = null;
+        temperatureEventExtractError = null;
+      });
+
+      try {
+        final event = await widget.args.appleHealth.getBodyTemperatureEvents(
+          selectedDate,
+        );
+
+        setState(() {
+          temperatureEventExtracting = false;
+          temperatureEventExtracted = event;
+          temperatureEventExtractError = null;
+        });
+      } catch (error) {
+        setState(() {
+          temperatureEventExtracting = false;
+          temperatureEventExtracted = null;
+          temperatureEventExtractError = '$error';
+        });
+      }
+    }
+  }
+
+  void temperatureEventEnqueue() async {
+    if (temperatureEventExtracted != null) {
+      setState(() {
+        temperatureEventEnqueueing = true;
+        temperatureEventEnqueued = false;
+        temperatureEventEnqueueError = null;
+      });
+
+      try {
+        for (final event in temperatureEventExtracted!) {
+          final item = event.toItem();
+
+          await widget.transmission.enqueueTemperatureEvent(item);
+        }
+
+        setState(() {
+          temperatureEventExtracted = null;
+
+          temperatureEventEnqueueing = false;
+          temperatureEventEnqueued = true;
+          temperatureEventEnqueueError = null;
+        });
+      } catch (error) {
+        setState(() {
+          temperatureEventEnqueueing = false;
+          temperatureEventEnqueued = false;
+          temperatureEventEnqueueError = '$error';
+        });
+      }
+    }
+  }
+
   void clearAllQueues() async {
     setState(() {
       clearing = true;
@@ -950,8 +1230,11 @@ class _AHPlaygroundScreenState extends State<AHPlaygroundScreen> {
       await widget.transmission.clearQueuedPhysicalSummaries();
       await widget.transmission.clearQueuedPhysicalEvents();
       await widget.transmission.clearQueuedBodySummaries();
+      await widget.transmission.clearQueuedBloodGlucoseEvents();
+      await widget.transmission.clearQueuedBloodPressureEvents();
       await widget.transmission.clearQueuedHeartRateEvents();
       await widget.transmission.clearQueuedOxygenationEvents();
+      await widget.transmission.clearQueuedTemperatureEvents();
 
       setState(() {
         clearing = false;
@@ -979,8 +1262,11 @@ class _AHPlaygroundScreenState extends State<AHPlaygroundScreen> {
       await widget.transmission.uploadPhysicalSummaries();
       await widget.transmission.uploadPhysicalEvents();
       await widget.transmission.uploadBodySummaries();
+      await widget.transmission.uploadBloodGlucoseEvents();
+      await widget.transmission.uploadBloodPressureEvents();
       await widget.transmission.uploadHeartRateEvents();
       await widget.transmission.uploadOxygenationEvents();
+      await widget.transmission.uploadTemperatureEvents();
 
       setState(() {
         syncing = false;
