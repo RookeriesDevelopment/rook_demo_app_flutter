@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:rook_demo_flutter/secrets.dart';
 import 'package:rook_users/rook_users.dart';
 
@@ -10,6 +11,8 @@ class RookUserStatus extends StatefulWidget {
 }
 
 class _RookUserStatusState extends State<RookUserStatus> {
+  final Logger logger = Logger('RookUserStatus');
+
   final RookUsersManager rookUsersManager = RookUsersManager(
     Secrets.clientUUID,
     Secrets.secretKey,
@@ -79,6 +82,27 @@ class _RookUserStatusState extends State<RookUserStatus> {
       ),
       const SizedBox(height: 10),
     ];
+  }
+
+  void checkRegistered(String userID) async {
+    try {
+      final rookUserHealthConnect = await rookUsersManager.getUser(UserType.healthConnect);
+      final rookUserAppleHealth = await rookUsersManager.getUser(UserType.appleHealth);
+
+      if (rookUserHealthConnect != null && rookUserHealthConnect.id == userID) {
+        logger.info('Health Connect user: $userID is registered');
+      } else {
+        logger.info('Health Connect user: $userID is NOT registered');
+      }
+
+      if (rookUserAppleHealth != null && rookUserAppleHealth.id == userID) {
+        logger.info('Apple Health user: $userID is registered');
+      } else {
+        logger.info('Apple Health user: $userID is NOT registered');
+      }
+    } catch (e) {
+      logger.severe('Error retrieving user: $e');
+    }
   }
 
   void initialize() async {

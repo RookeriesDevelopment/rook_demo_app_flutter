@@ -396,10 +396,10 @@ packages:
     dependency: "direct main"
     description:
       name: rook_users
-      sha256: fbbf0c9b78d639acf5d3e757dc2e267b77559c00313e0cfcc057f5939711e7c5
+      sha256: f4bd870082dd028e5a709777fad7bdfd2fd8e1ab0c0e4bf920ba801526976aa0
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.0"
+    version: "0.5.1"
   shared_preferences:
     dependency: transitive
     description:
