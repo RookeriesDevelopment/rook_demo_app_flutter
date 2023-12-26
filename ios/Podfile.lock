@@ -11,9 +11,9 @@ PODS:
     - FlutterMacOS
   - rook_apple_health (0.0.1):
     - Flutter
-    - RookAppleHealth (= 1.0.24)
+    - RookAppleHealth (= 1.0.26)
     - SwiftProtobuf (= 1.21.0)
-  - RookAppleHealth (1.0.24)
+  - RookAppleHealth (1.0.26)
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -65,8 +65,8 @@ SPEC CHECKSUMS:
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   isar_flutter_libs: b69f437aeab9c521821c3f376198c4371fa21073
   path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
-  rook_apple_health: 91090a942389f1af9a6a1025bdb71e3714175657
-  RookAppleHealth: d86469df04b8b09ba230e6747cece41d68f315af
+  rook_apple_health: 691adae4a298461060d239c73f6ef5f5ee7f3ac3
+  RookAppleHealth: 835142512b08794ee174b44dfc49ff16a875ba43
   shared_preferences_foundation: e2dae3258e06f44cc55f49d42024fd8dd03c590c
   SwiftProtobuf: afced68785854575756db965e9da52bbf3dc45e7
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
